@@ -23,7 +23,7 @@ function useQuery() {
 
 export default function AnswerCreate() {
   const query = useQuery();
-  const memberId = query.get("memberId") as string;
+  // const memberId = query.get("memberId") as string;
   const questionId = query.get("questionId") as string;
 
   const [colorCode, setColorCode] = useState<string | undefined>(undefined);
@@ -38,17 +38,18 @@ export default function AnswerCreate() {
   }
 
   const sendAnswer = async () => {
-    await memberAPI.search(memberId).then((res) => {
+    await memberAPI.search(storedId).then((res) => {
       const userInfo = res.data.data;
       setUserNicname(userInfo.nickname);
-    });
-    await answerAPI.create({
-      memberId: Number(localStorage.getItem("userId")),
-      questionId: questionId,
-      nickname: userNickname,
-      sender: senderName,
-      content,
-      colorCode: colorCode ?? COLOR_CODE_LIST[0],
+
+      answerAPI.create({
+        memberId: Number(storedId),
+        questionId: questionId,
+        nickname: userNickname,
+        sender: senderName,
+        content,
+        colorCode: colorCode ?? COLOR_CODE_LIST[0],
+      });
     });
   };
 
