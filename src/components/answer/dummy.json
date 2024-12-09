@@ -1,0 +1,58 @@
+{
+  "answerData": [
+    {
+      "sender": "산타",
+      "content": "호호호 메리크리스마스",
+      "colorCode": "#DB3E00",
+      "regDate": ""
+    },
+    {
+      "sender": "루돌프",
+      "content": "썰매 같이 타고 놀자",
+      "colorCode": "#FF6900",
+      "regDate": ""
+    },
+    {
+      "sender": "요정",
+      "content": "너의 소원은 뭐야?",
+      "colorCode": "#FCB900",
+      "regDate": ""
+    },
+    {
+      "sender": "파크",
+      "content": "힘내세요 힘내세요 힘내세요 힘내세요 힘내세요 힘내세요 힘내세요 힘내세요 힘내세요",
+      "colorCode": "#EB144C",
+      "regDate": ""
+    },
+    {
+      "sender": "시고",
+      "content": "밥 먹으세요 밥 먹으세요 밥 먹으세요 밥 먹으세요 밥 먹으세요 밥 먹으세요 밥 먹으세요",
+      "colorCode": "#7BDCB5",
+      "regDate": ""
+    },
+    {
+      "sender": "우주",
+      "content": "유재석 게섯거라 post 유재석이 나가신다",
+      "colorCode": "#00D084",
+      "regDate": ""
+    },
+    {
+      "sender": "쏘이",
+      "content": "철통같은 관리와 카리스마를 가진 PL이 여깄습니다",
+      "colorCode": "#8ED1FC",
+      "regDate": ""
+    },
+    {
+      "sender": "벤티",
+      "content": "사장님 여기 슈퍼 울트라 마제스틱 킹 갓 제너럴 벤티 울트라 사이즈 아이스 아메리카노 주세요",
+      "colorCode": "#0693E3",
+      "regDate": ""
+    },
+    {
+      "sender": "쿠리",
+      "content": "조용하지만 깔끔한 업무 처리능력, 거의 스탤스 전투기",
+      "colorCode": "#F78DA7",
+      "regDate": ""
+    }
+  ]
+}
