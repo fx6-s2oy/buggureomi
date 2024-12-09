@@ -1,7 +1,5 @@
 import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 
-import { MockRouteList } from "@/routes/_mock";
-
 import Main from "@/pages/main";
 
 import MemberJoin from "@/pages/member-join";
