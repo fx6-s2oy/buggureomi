@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 import { ColorPicker } from "@/components/color/ColorPicker";
 import {
   Popover,
@@ -5,24 +7,50 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MOCK_MEMBER } from "../_mock/data/member";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import UnderlineInput from "@/components/input/UnderlineInput";
 import { COLOR_CODE_LIST } from "@/constant/color";
 import { answerAPI } from "@/api/answer";
 import { DirectLogin } from "@/components/display/DirectLogin";
+import { memberAPI } from "@/api/member";
+
+function useQuery() {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 
 export default function AnswerCreate() {
+  const query = useQuery();
+  const memberId = query.get("memberId") as string;
+  const questionId = query.get("questionId") as string;
+
   const [colorCode, setColorCode] = useState<string | undefined>(undefined);
   const [content, setContent] = useState<string>("");
+  const [userNickname, setUserNicname] = useState<string>("");
   const [senderName, setSenderName] = useState<string>("");
 
-  const memberId = localStorage.getItem("userId");
+  const storedId = localStorage.getItem("userId");
 
-  if (!memberId) {
+  if (!storedId) {
     return <DirectLogin />;
   }
+
+  const sendAnswer = async () => {
+    await memberAPI.search(memberId).then((res) => {
+      const userInfo = res.data.data;
+      setUserNicname(userInfo.nickname);
+    });
+    await answerAPI.create({
+      memberId: Number(localStorage.getItem("userId")),
+      questionId: questionId,
+      nickname: userNickname,
+      sender: senderName,
+      content,
+      colorCode: colorCode ?? COLOR_CODE_LIST[0],
+    });
+  };
 
   return (
     <section className="h-screen flex justify-evenly flex-col items-center">
@@ -81,18 +109,7 @@ export default function AnswerCreate() {
         className="bg-gray-400"
         disabled={!senderName || !content}
         children="보따리에 넣기"
-        onClick={async () => {
-          // TODO: Answer Post API Call
-
-          answerAPI.create({
-            memberId: Number(localStorage.getItem("userId")),
-            questionId: 1,
-            nickname: "삭제 예정 데이터",
-            sender: senderName,
-            content,
-            colorCode: colorCode ?? COLOR_CODE_LIST[0],
-          });
-        }}
+        onClick={sendAnswer}
       />
     </section>
   );

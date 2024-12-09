@@ -17,4 +17,11 @@ export const memberAPI = {
 
     return res;
   },
+  search: async (
+    memberId: string
+  ): Promise<AxiosResponse<T.MemberSearchResponse>> => {
+    const res = await api.get(`/member/${memberId}`);
+
+    return res;
+  },
 };

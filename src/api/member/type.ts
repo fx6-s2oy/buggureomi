@@ -14,3 +14,12 @@ export type MemberLoginParam = {
 };
 
 export type MemberLoginResponse = BaseResponse<{ id: number }>;
+
+export type MemberSearchResponse = BaseResponse<{
+  id: string;
+  nickname: string;
+  email: string;
+  isPublicVisible: 0 | 1;
+  isCountVisible: 0 | 1;
+  isAuthRequired: 0 | 1;
+}>;

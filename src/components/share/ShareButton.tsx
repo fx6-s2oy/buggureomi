@@ -7,13 +7,18 @@ import { SHARE_LINK_PARAM } from "@/constant/link";
 type Props = {
   className?: string;
   memberId: string;
+  questionId: string;
 };
 
-export default function ShareButton({ className, memberId }: Props) {
+export default function ShareButton({
+  className,
+  memberId,
+  questionId,
+}: Props) {
   const { toast } = useToast();
 
   const copyShareLinkAddress = () => {
-    getLink(memberId, SHARE_LINK_PARAM).then((data) => {
+    getLink(questionId, memberId, SHARE_LINK_PARAM).then((data) => {
       navigator.clipboard.writeText(data.data.url).then(() => {
         toast({
           description: "링크가 복사되었습니다",
