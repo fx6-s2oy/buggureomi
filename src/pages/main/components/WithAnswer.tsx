@@ -1,7 +1,7 @@
-import ShareButton from "@/components/share/ShareButton";
 import { BUNDEL_IMAGE_URL } from "@/constant/image";
 import { Answer } from "@/types/answer";
 import { ReflectionButton } from "@/pages/main/components/ReflectionButton";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   answerCount: number;
@@ -27,7 +27,11 @@ export default function WithAnswer({
       <span className="font-bold mb-4 ">
         누구의 쪽지일까요? 지금 열어보세요!
       </span>
-      <ShareButton memberId={memberId} className="mb-2" />
+
+      <span className="text-gray-300">
+        공유하기 버튼은 추후 개발 예정이에요!
+      </span>
+      <Button disabled className="mb-2 w-24" children="공유" />
       <ReflectionButton memberId={memberId} />
     </div>
   );

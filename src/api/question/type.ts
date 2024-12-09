@@ -9,4 +9,7 @@ export type QuestionCreateParam = {
   isCommonQuestion: number;
 };
 
-export type QuestionCreateResponse = BaseResponse;
+export type QuestionCreateResponse = BaseResponse<{
+  questionId: number;
+  memberId: number;
+}>;

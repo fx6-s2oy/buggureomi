@@ -26,8 +26,11 @@ export default function QuestionCreateDetail() {
         isAuthRequired: 1,
         isCommonQuestion: 1,
       })
-      .then(() => {
-        history.push({ pathname: "/question-create-complete" });
+      .then((res) => {
+        history.push({
+          pathname: "/question-create-complete",
+          state: { questionId: res.data.data.questionId },
+        });
       });
   };
 

@@ -6,8 +6,8 @@ import { SHARE_LINK_PARAM } from "@/constant/link";
 
 type Props = {
   className?: string;
-  memberId: string;
-  questionId: string;
+  memberId: number;
+  questionId: number;
 };
 
 export default function ShareButton({
@@ -18,13 +18,15 @@ export default function ShareButton({
   const { toast } = useToast();
 
   const copyShareLinkAddress = () => {
-    getLink(questionId, memberId, SHARE_LINK_PARAM).then((data) => {
-      navigator.clipboard.writeText(data.data.url).then(() => {
-        toast({
-          description: "링크가 복사되었습니다",
+    getLink(String(questionId), String(memberId), SHARE_LINK_PARAM).then(
+      (data) => {
+        navigator.clipboard.writeText(data.data.url).then(() => {
+          toast({
+            description: "링크가 복사되었습니다",
+          });
         });
-      });
-    });
+      }
+    );
   };
 
   return (

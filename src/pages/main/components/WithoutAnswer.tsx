@@ -1,4 +1,4 @@
-import ShareButton from "@/components/share/ShareButton";
+import { Button } from "@/components/ui/button";
 import { BUNDEL_IMAGE_URL } from "@/constant/image";
 import { ReflectionButton } from "@/pages/main/components/ReflectionButton";
 
@@ -16,7 +16,10 @@ export default function WithoutAnswer({ memberId }: Props) {
       <span className="font-bold mb-2">
         쪽지를 넣어줄 친구에게 공유해보아요!
       </span>
-      <ShareButton memberId={memberId} className="mb-2" />
+      <span className="text-gray-300">
+        공유하기 버튼은 추후 개발 예정이에요!
+      </span>
+      <Button disabled className="mb-2 w-24" children="공유" />
       <ReflectionButton memberId={memberId} />
     </div>
   );
