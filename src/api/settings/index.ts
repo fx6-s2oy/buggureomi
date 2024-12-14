@@ -4,15 +4,15 @@ import { api } from "@/api";
 
 export const userInfo = {
   getSettings: async (
-    memberId: string
+    userId: number
   ): Promise<AxiosResponse<MemberResponse>> => {
-    return api.get(`/member/${memberId}`);
+    return api.get(`/member/${userId}`);
   },
 
   updateSettings: async (
-    memberId: string,
+    userId: number,
     settings: MemberSettings
   ): Promise<AxiosResponse<MemberResponse>> => {
-    return api.put(`/member/${memberId}`, settings);
+    return api.put(`/member/${userId}`, settings);
   },
 };

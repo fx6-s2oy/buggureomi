@@ -24,6 +24,8 @@ import {
 } from "@/api/self-reflection/type";
 import ReadOnlyReflection from "@/pages/self-reflection/ReadOnlyReflection";
 
+import { useUserStore } from "@/store/userStore";
+
 const DESCRIPTION = {
   WRITE: "수정이 불가능하니 나를 깊게 돌아봐주세요",
   READ: "이전에 작성한 나의 회고입니다",
@@ -71,7 +73,7 @@ export default function SelfReflection() {
   );
 
   const history = useHistory();
-  const userId = localStorage.getItem("userId");
+  const { userId } = useUserStore();
 
   const form = useForm<z.infer<typeof selfReflectionSchema>>({
     resolver: zodResolver(selfReflectionSchema),
@@ -83,24 +85,6 @@ export default function SelfReflection() {
       message2025: "",
     },
   });
-
-  const fetchQuestions = async () => {
-    if (!userId) return;
-    try {
-      const [questionsRes, answersRes] = await Promise.all([
-        selfReflection.getCommonQuestions(userId),
-        selfReflection.getSelfReflection(userId),
-      ]);
-      setQuestions(questionsRes.data.data);
-      setExistingAnswers(answersRes.data.data);
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "질문 로딩 실패",
-        description: "질문을 불러오는데 실패했습니다. 다시 시도해주세요.",
-      });
-    }
-  };
 
   function onSubmit() {
     setShowConfirmModal(true);
@@ -137,10 +121,28 @@ export default function SelfReflection() {
   };
 
   useEffect(() => {
+    const fetchQuestions = async () => {
+      if (!userId) return;
+      try {
+        const [questionsRes, answersRes] = await Promise.all([
+          selfReflection.getCommonQuestions(),
+          selfReflection.getSelfReflection(userId),
+        ]);
+        setQuestions(questionsRes.data.data);
+        setExistingAnswers(answersRes.data.data);
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "질문 로딩 실패",
+          description: "질문을 불러오는데 실패했습니다. 다시 시도해주세요.",
+        });
+      }
+    };
+
     if (userId) {
       fetchQuestions();
     }
-  }, [userId]);
+  }, [userId, toast]);
 
   return (
     <div className="w-full">

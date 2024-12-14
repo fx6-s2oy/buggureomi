@@ -13,7 +13,7 @@ export const answerAPI = {
   list: async (
     param: T.GetAnswerListParam
   ): Promise<AxiosResponse<T.GetAnswerListResponse>> => {
-    const res = await api.get(`answer/${param.memberId}/list`);
+    const res = await api.get(`answer/${param.userId}/list`);
 
     return res;
   },
@@ -30,9 +30,9 @@ export const answerAPI = {
     return res;
   },
   getSelfReflectionAnswer: async (
-    memberId: string
+    userId: number
   ): Promise<T.SelfReflectionAnswerResponse> => {
-    const res = await api.get(`/self-reflection/${memberId}/list`);
+    const res = await api.get(`/self-reflection/${userId}/list`);
     return res.data;
   },
 };

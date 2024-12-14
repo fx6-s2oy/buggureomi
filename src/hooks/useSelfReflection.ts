@@ -3,7 +3,7 @@ import { answerAPI } from "@/api/answer";
 import { SelfReflection } from "@/types/self-reflection";
 import { useToast } from "@/hooks/use-toast";
 
-export function useSelfReflection(memberId: string) {
+export function useSelfReflection(userId: number) {
   const [selfReflection, setSelfReflection] = useState<SelfReflection>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -11,7 +11,7 @@ export function useSelfReflection(memberId: string) {
   useEffect(() => {
     const fetchSelfReflection = async () => {
       try {
-        const response = await answerAPI.getSelfReflectionAnswer(memberId);
+        const response = await answerAPI.getSelfReflectionAnswer(userId);
         setSelfReflection(response.data);
       } catch (error) {
         toast({
@@ -25,7 +25,7 @@ export function useSelfReflection(memberId: string) {
     };
 
     fetchSelfReflection();
-  }, [memberId]);
+  }, [userId, toast]);
 
   return {
     selfReflection,

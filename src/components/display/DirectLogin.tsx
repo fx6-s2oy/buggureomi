@@ -15,7 +15,7 @@ export function DirectLogin() {
         onClick={() =>
           history.push({
             pathname: "/member-login",
-            state: { memberId: DUMMY_MEMBER_ID },
+            state: { userId: DUMMY_MEMBER_ID },
           })
         }
       >

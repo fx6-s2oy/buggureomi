@@ -1,13 +1,15 @@
-import { answerAPI } from "@/api/answer";
 import { useEffect, useState } from "react";
+import { answerAPI } from "@/api/answer";
+
+import { useUserStore } from "@/store/userStore";
 
 const Snowfall = () => {
   const snowflakes = Array.from({ length: 50 });
 
   const [snowColorArray, setSnowColorArray] = useState<string[]>([]);
 
-  const handleSnowflakeColor = async (memberId: number) => {
-    await answerAPI.list({ memberId }).then((res) => {
+  const handleSnowflakeColor = async (userId: number) => {
+    await answerAPI.list({ userId }).then((res) => {
       const data = res.data.data;
 
       const colorArr = data.list?.map((answer) => answer.colorCode);
@@ -17,9 +19,9 @@ const Snowfall = () => {
     });
   };
 
-  const userId = Number(localStorage.getItem("userId"));
+  const { userId } = useUserStore();
   useEffect(() => {
-    handleSnowflakeColor(userId);
+    if (userId) handleSnowflakeColor(userId);
   }, [userId]);
 
   return (

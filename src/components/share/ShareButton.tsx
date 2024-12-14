@@ -6,27 +6,21 @@ import { SHARE_LINK_PARAM } from "@/constant/link";
 
 type Props = {
   className?: string;
-  memberId: number;
+  userId: number;
   questionId: number;
 };
 
-export default function ShareButton({
-  className,
-  memberId,
-  questionId,
-}: Props) {
+export default function ShareButton({ className, userId, questionId }: Props) {
   const { toast } = useToast();
 
   const copyShareLinkAddress = () => {
-    getLink(String(questionId), String(memberId), SHARE_LINK_PARAM).then(
-      (data) => {
-        navigator.clipboard.writeText(data.data.url).then(() => {
-          toast({
-            description: "링크가 복사되었습니다",
-          });
+    getLink(questionId, userId, SHARE_LINK_PARAM).then((data) => {
+      navigator.clipboard.writeText(data.data.url).then(() => {
+        toast({
+          description: "링크가 복사되었습니다",
         });
-      }
-    );
+      });
+    });
   };
 
   return (

@@ -3,25 +3,21 @@ import { api } from "..";
 import * as T from "./type";
 
 export const selfReflection = {
-  getCommonQuestions: async (
-    memberId: string
-  ): Promise<AxiosResponse<T.QuestionResponse>> => {
-    return api.get("/self-reflection/common-question", {
-      params: { memberId },
-    });
+  getCommonQuestions: async (): Promise<AxiosResponse<T.QuestionResponse>> => {
+    return api.get("/self-reflection/common-question");
   },
 
   getSelfReflection: async (
-    memberId: string
+    userId: number
   ): Promise<AxiosResponse<T.GetReflectionAnswerResponse>> => {
-    return api.get(`/self-reflection/${memberId}/list`);
+    return api.get(`/self-reflection/${userId}/list`);
   },
 
   submitReflections: async (
-    memberId: string,
+    userId: number,
     reflections: T.ReflectionRequest[]
   ) => {
-    return api.post(`/self-reflection/${memberId}`, {
+    return api.post(`/self-reflection/${userId}`, {
       reflections,
     });
   },

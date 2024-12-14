@@ -4,8 +4,11 @@ import { Label } from "@/components/ui/label";
 import { MemberSettings } from "@/types/member";
 import { userInfo } from "@/api/settings";
 
+import { useUserStore } from "@/store/userStore";
+
 export default function Settings() {
-  const memberId = "9"; // 임시 memberId
+  const { userId } = useUserStore();
+
   const [settings, setSettings] = useState<MemberSettings>({
     isPublicVisible: 0,
     isCountVisible: 0,
@@ -19,27 +22,28 @@ export default function Settings() {
     };
 
     try {
-      await userInfo.updateSettings(memberId, newSettings);
+      if (userId) await userInfo.updateSettings(userId, newSettings);
       setSettings(newSettings);
     } catch (error) {
       setSettings(settings);
     }
   };
 
-  const fetchSettings = async () => {
-    try {
-      const response = await userInfo.getSettings(memberId);
-      const { isPublicVisible, isCountVisible, isAuthRequired } =
-        response.data.data;
-      setSettings({ isPublicVisible, isCountVisible, isAuthRequired });
-    } catch (error) {
-      console.error("설정을 불러오는데 실패했습니다.");
-    }
-  };
-
   useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        if (userId) {
+          const response = await userInfo.getSettings(userId);
+          const { isPublicVisible, isCountVisible, isAuthRequired } =
+            response.data.data;
+          setSettings({ isPublicVisible, isCountVisible, isAuthRequired });
+        }
+      } catch (error) {
+        console.error("설정을 불러오는데 실패했습니다.");
+      }
+    };
     fetchSettings();
-  }, [memberId]);
+  }, [userId]);
 
   return (
     <div>

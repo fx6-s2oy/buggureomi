@@ -1,25 +1,29 @@
+import { useLocation, useHistory } from "react-router-dom";
+
 import { questionAPI } from "@/api/question";
 import { DirectLogin } from "@/components/display/DirectLogin";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+
 import { BUNDEL_IMAGE_URL } from "@/constant/image";
-import { MEMBER_ID_KEY } from "@/constant/keys";
-import { useLocation, useHistory } from "react-router-dom";
+
+import { useUserStore } from "@/store/userStore";
 
 export default function QuestionCreateDetail() {
   const { state } = useLocation<{ content: string }>();
-  const memberId = localStorage.getItem(MEMBER_ID_KEY);
   const history = useHistory();
 
-  if (!memberId) {
+  const { userId } = useUserStore();
+
+  if (!userId) {
     return <DirectLogin />;
   }
 
   const handleClick = () => {
     questionAPI
       .create({
-        memberId: Number(memberId),
+        memberId: userId,
         content: state?.content ?? "",
         isPublicVisible: 1,
         isCountVisible: 1,

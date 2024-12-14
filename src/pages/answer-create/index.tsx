@@ -1,4 +1,8 @@
+import { useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
+
+import { answerAPI } from "@/api/answer";
+import { memberAPI } from "@/api/member";
 
 import { ColorPicker } from "@/components/color/ColorPicker";
 import {
@@ -6,15 +10,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { MOCK_MEMBER } from "../_mock/data/member";
-import { useState, useMemo } from "react";
+import UnderlineInput from "@/components/input/UnderlineInput";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import UnderlineInput from "@/components/input/UnderlineInput";
-import { COLOR_CODE_LIST } from "@/constant/color";
-import { answerAPI } from "@/api/answer";
 import { DirectLogin } from "@/components/display/DirectLogin";
-import { memberAPI } from "@/api/member";
+
+import { MOCK_MEMBER } from "../_mock/data/member";
+import { COLOR_CODE_LIST } from "@/constant/color";
+
+import { useUserStore } from "@/store/userStore";
 
 function useQuery() {
   const { search } = useLocation();
@@ -23,7 +27,8 @@ function useQuery() {
 
 export default function AnswerCreate() {
   const query = useQuery();
-  // const memberId = query.get("memberId") as string;
+
+  // TODO: questionId로 질문 정보 조회하는 api 연결 필요
   const questionId = query.get("questionId") as string;
 
   const [colorCode, setColorCode] = useState<string | undefined>(undefined);
@@ -31,19 +36,20 @@ export default function AnswerCreate() {
   const [userNickname, setUserNicname] = useState<string>("");
   const [senderName, setSenderName] = useState<string>("");
 
-  const storedId = localStorage.getItem("userId");
+  const { userId } = useUserStore();
 
-  if (!storedId) {
+  if (!userId) {
+    // TODO: 추후 질문에 설정된 옵션에 따라 login 체크 여부 나뉘도록 설정 필요
     return <DirectLogin />;
   }
 
   const sendAnswer = async () => {
-    await memberAPI.search(storedId).then((res) => {
+    await memberAPI.search(userId).then((res) => {
       const userInfo = res.data.data;
       setUserNicname(userInfo.nickname);
 
       answerAPI.create({
-        memberId: Number(storedId),
+        memberId: userId,
         questionId: questionId,
         nickname: userNickname,
         sender: senderName,

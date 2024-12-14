@@ -20,7 +20,7 @@ export type AnswerCreateResponse = BaseResponse<{
 export type SelfReflectionAnswerResponse = BaseResponse<SelfReflection>;
 
 export type GetAnswerListParam = {
-  memberId: number;
+  userId: number;
 };
 
 export type GetAnswerListResponse = BaseResponse<{

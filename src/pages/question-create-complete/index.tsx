@@ -1,16 +1,20 @@
+import { useLocation, useHistory } from "react-router-dom";
+
 import { DirectLogin } from "@/components/display/DirectLogin";
 import ShareButton from "@/components/share/ShareButton";
 import { Button } from "@/components/ui/button";
+
 import { BUNDEL_IMAGE_URL } from "@/constant/image";
-import { MEMBER_ID_KEY } from "@/constant/keys";
-import { useLocation, useHistory } from "react-router-dom";
+
+import { useUserStore } from "@/store/userStore";
 
 export default function QuestionCreateComplete() {
   const { state } = useLocation<{ questionId: number }>();
   const history = useHistory();
-  const memberId = localStorage.getItem(MEMBER_ID_KEY);
 
-  if (!memberId || !state.questionId) {
+  const { userId } = useUserStore();
+
+  if (!userId || !state.questionId) {
     return <DirectLogin />;
   }
 
@@ -30,10 +34,7 @@ export default function QuestionCreateComplete() {
 
       <div className="flex gap-1">
         <Button onClick={() => history.push("/main")}>메인 이동</Button>
-        <ShareButton
-          memberId={Number(memberId)}
-          questionId={state.questionId}
-        />
+        <ShareButton userId={userId} questionId={state.questionId} />
       </div>
     </div>
   );

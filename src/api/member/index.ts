@@ -18,9 +18,9 @@ export const memberAPI = {
     return res;
   },
   search: async (
-    memberId: string
+    userId: number
   ): Promise<AxiosResponse<T.MemberSearchResponse>> => {
-    const res = await api.get(`/member/${memberId}`);
+    const res = await api.get(`/member/${userId}`);
 
     return res;
   },

@@ -6,14 +6,16 @@ import AnswerDetailDialog from "@/components/answer/dialog/AnswerDetailDialog";
 import { answerAPI } from "@/api/answer";
 import { Answer } from "@/types/answer";
 
+import { useUserStore } from "@/store/userStore";
+
 export default function AnswerResult() {
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Answer | null>(null);
 
   const [answersData, setAnswersData] = useState<Answer[]>();
 
-  const getAnswersData = async (memberId: number) => {
-    await answerAPI.list({ memberId: memberId }).then((res) => {
+  const getAnswersData = async (userId: number) => {
+    await answerAPI.list({ userId }).then((res) => {
       const data = res.data;
 
       if (data.status === "OK" && data.data.list) {
@@ -22,9 +24,9 @@ export default function AnswerResult() {
     });
   };
 
-  const userId = Number(localStorage.getItem("userId"));
+  const { userId } = useUserStore();
   useEffect(() => {
-    getAnswersData(userId);
+    if (userId) getAnswersData(userId);
   }, [userId]);
 
   const handleDialogToggle = (marble?: Answer) => {
@@ -37,7 +39,7 @@ export default function AnswerResult() {
 
   const handleDeleteSuccess = () => {
     handleDialogToggle();
-    getAnswersData(userId);
+    if (userId) getAnswersData(userId);
   };
 
   return (

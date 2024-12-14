@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 type Props = {
   answerCount: number;
   previewMessage: Answer;
-  memberId: string;
+  userId: number;
 };
 
 export default function WithAnswer({
   answerCount,
   previewMessage,
-  memberId,
+  userId,
 }: Props) {
   return (
     <div className="flex flex-col items-center">
@@ -32,7 +32,7 @@ export default function WithAnswer({
         공유하기 버튼은 추후 개발 예정이에요!
       </span>
       <Button disabled className="mb-2 w-24" children="공유" />
-      <ReflectionButton memberId={memberId} />
+      <ReflectionButton userId={userId} />
     </div>
   );
 }

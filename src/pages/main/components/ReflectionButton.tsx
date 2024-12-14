@@ -3,12 +3,12 @@ import { useSelfReflection } from "@/hooks/useSelfReflection";
 import { useHistory } from "react-router-dom";
 
 type ReflectionButtonProps = {
-  memberId: string;
+  userId: number;
 };
 
-export function ReflectionButton({ memberId }: ReflectionButtonProps) {
+export function ReflectionButton({ userId }: ReflectionButtonProps) {
   const history = useHistory();
-  const { hasReflection, isLoading } = useSelfReflection(memberId);
+  const { hasReflection, isLoading } = useSelfReflection(userId);
 
   if (isLoading) return null;
 
