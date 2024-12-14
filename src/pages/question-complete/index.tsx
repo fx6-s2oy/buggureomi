@@ -10,7 +10,7 @@ export default function QuestionComplete() {
   return (
     <section className="h-screen flex flex-col">
       <div className="flex flex-col items-center gap-3">
-        <h2 className="text-h2 text-gray-dark text-center">
+        <h2 className="text-h2 text-gray-900 text-center">
           {MOCK_MEMBER.nickname}님의 보따리에
           <br />
           마음이 담긴 구슬이 담겼어요!
@@ -30,7 +30,6 @@ export default function QuestionComplete() {
       <Button
         className="w-full"
         variant="default"
-        size="lg"
         onClick={() => history.push("/main")}
       >
         메인 이동

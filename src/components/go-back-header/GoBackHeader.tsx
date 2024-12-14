@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { MoveLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -16,7 +16,7 @@ export default function GoBackHeader({ onBack, children, className }: Props) {
           onBack();
         }}
       >
-        <MoveLeft />
+        <ArrowLeft size={32} color="#F0F0F0" />
       </button>
       {children}
     </header>
