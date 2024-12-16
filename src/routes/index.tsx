@@ -12,7 +12,6 @@ import QuestionCreateComplete from "@/pages/question-create-complete";
 import AnswerCreate from "@/pages/answer-create";
 import AnswerResult from "@/pages/answer-result";
 import SelfReflection from "@/pages/self-reflection";
-import Settings from "@/pages/settings";
 import QuestionComplete from "@/pages/question-complete";
 import PrivateRoute from "@/routes/PrivateRoute";
 import RootLayout from "@/components/RootLayout";
@@ -101,15 +100,6 @@ export default function Routing() {
               render={() => (
                 <PrivateRoute>
                   <AnswerResult />
-                </PrivateRoute>
-              )}
-            />
-            <Route
-              exact
-              path="/settings"
-              render={() => (
-                <PrivateRoute>
-                  <Settings />
                 </PrivateRoute>
               )}
             />

@@ -1,13 +1,23 @@
+import { Settings } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+} from "@/components/ui/sheet";
 import { MemberSettings } from "@/types/member";
 import { userInfo } from "@/api/settings";
-
 import { useUserStore } from "@/store/userStore";
 
-export default function Settings() {
+export default function SettingsSheet() {
   const { userId } = useUserStore();
+  const [open, setOpen] = useState(false);
 
   const [settings, setSettings] = useState<MemberSettings>({
     isPublicVisible: 0,
@@ -46,16 +56,41 @@ export default function Settings() {
   }, [userId]);
 
   return (
-    <div>
-      <h2 className="text-h2 text-gray-dark">설정</h2>
-      <div className="space-y-6">
-        <div className="flex flex-col gap-4">
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <button>
+          <Settings size={32} color="#F0F0F0" />
+        </button>
+      </SheetTrigger>
+      <SheetContent className="w-[300px] bg-[#D6D8E1] flex flex-col rounded-l-sheet p-10">
+        <SheetHeader className="pb-4">
+          <div className="flex justify-center items-center gap-2">
+            <Settings size={24} />
+            <SheetTitle>
+              <h2 className="text-h2 text-gray-900 flex items-center">설정</h2>
+            </SheetTitle>
+          </div>
+        </SheetHeader>
+        <div className="space-y-5">
+          <div className="flex items-center justify-between">
+            <Label
+              htmlFor="marble-count"
+              className="text-body text-gray-900 font-semibold"
+            >
+              구슬(답변) 개수 공개
+            </Label>
+            <Switch
+              id="marble-count"
+              checked={settings.isAuthRequired === 1}
+              onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
+            />
+          </div>
           <div className="flex items-center justify-between">
             <Label
               htmlFor="login-required"
-              className="text-h6 text-gray-dark flex-1"
+              className="text-body text-gray-900 font-semibold"
             >
-              회원만 대답을 넣을 수 있게 할까요?
+              로그인한 유저만 답변 가능
             </Label>
             <Switch
               id="login-required"
@@ -66,9 +101,9 @@ export default function Settings() {
           <div className="flex items-center justify-between">
             <Label
               htmlFor="pouch-visible"
-              className="text-h2 text-gray-dark flex-1"
+              className="text-body text-gray-900 font-semibold"
             >
-              다른 사람도 내 보따리를 열어볼 수 있게 할까요?
+              다른 유저 조회 가능
             </Label>
             <Switch
               id="pouch-visible"
@@ -76,21 +111,17 @@ export default function Settings() {
               onCheckedChange={() => handleUpdateSetting("isCountVisible")}
             />
           </div>
-          <div className="flex items-center justify-between">
-            <Label
-              htmlFor="marble-count"
-              className="text-h6 text-gray-dark flex-1"
-            >
-              내 보따리에 담긴 답변 갯수가 보이게 할까요?
-            </Label>
-            <Switch
-              id="marble-count"
-              checked={settings.isAuthRequired === 1}
-              onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
-            />
-          </div>
         </div>
-      </div>
-    </div>
+        <SheetFooter className="mt-auto">
+          <Button
+            variant="secondary"
+            className="w-full"
+            onClick={() => setOpen(false)}
+          >
+            닫기
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
