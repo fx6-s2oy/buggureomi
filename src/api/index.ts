@@ -19,7 +19,11 @@ const createAxios = (): AxiosInstance => {
 
 // TODO: token 세팅 후 코드 수정 필요
 const token = "";
-const interceptors = (instance: AxiosInstance): AxiosInstance => {
+const interceptors = (): AxiosInstance => {
+  const instance = axios.create({
+    baseURL: BASE_URL + VERSION,
+    headers: HEADERS,
+  });
   instance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
       if (!config.headers) {
@@ -39,4 +43,4 @@ const interceptors = (instance: AxiosInstance): AxiosInstance => {
 export const api = createAxios();
 
 // With token
-export const apiWithToken = interceptors(api);
+export const apiWithToken = interceptors();
