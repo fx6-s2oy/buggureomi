@@ -9,6 +9,12 @@ export const memberJoin = z.object({
   password: z.string().regex(/^\d{4,}$/, {
     message: "비밀번호는 4자리 이상의 숫자로만 구성되어야 합니다.",
   }),
+  terms1: z.boolean().refine((value) => value === true, {
+    message: "약관1에 동의해야 합니다.",
+  }),
+  terms2: z.boolean().refine((value) => value === true, {
+    message: "약관2에 동의해야 합니다.",
+  }),
 });
 
 export type MemberJoinFormType = z.infer<typeof memberJoin>;

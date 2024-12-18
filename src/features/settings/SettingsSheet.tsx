@@ -1,5 +1,9 @@
-import { Settings } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Settings } from "lucide-react";
+
+import { userInfo } from "@/api/settings";
+import { MemberSettings } from "@/types/member";
+
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -11,8 +15,8 @@ import {
   SheetTrigger,
   SheetFooter,
 } from "@/components/ui/sheet";
-import { MemberSettings } from "@/types/member";
-import { userInfo } from "@/api/settings";
+import LogoutButton from "@/components/common/LogoutButton";
+
 import { useUserStore } from "@/store/userStore";
 
 export default function SettingsSheet() {
@@ -62,21 +66,18 @@ export default function SettingsSheet() {
           <Settings size={32} color="#F0F0F0" />
         </button>
       </SheetTrigger>
-      <SheetContent className="w-[300px] bg-[#D6D8E1] flex flex-col rounded-l-sheet p-10">
+      <SheetContent className="w-[300px] bg-[#373A4D] opacity-90 flex flex-col rounded-l-sheet p-10 border-none text-white">
         <SheetHeader className="pb-4">
           <div className="flex justify-center items-center gap-2">
             <Settings size={24} />
             <SheetTitle>
-              <h2 className="text-h2 text-gray-900 flex items-center">설정</h2>
+              <h2 className="text-h2 text-white flex items-center">설정</h2>
             </SheetTitle>
           </div>
         </SheetHeader>
         <div className="space-y-5">
           <div className="flex items-center justify-between">
-            <Label
-              htmlFor="marble-count"
-              className="text-body text-gray-900 font-semibold"
-            >
+            <Label htmlFor="marble-count" className="text-body font-semibold">
               구슬(답변) 개수 공개
             </Label>
             <Switch
@@ -86,10 +87,7 @@ export default function SettingsSheet() {
             />
           </div>
           <div className="flex items-center justify-between">
-            <Label
-              htmlFor="login-required"
-              className="text-body text-gray-900 font-semibold"
-            >
+            <Label htmlFor="login-required" className="text-body font-semibold">
               로그인한 유저만 답변 가능
             </Label>
             <Switch
@@ -99,10 +97,7 @@ export default function SettingsSheet() {
             />
           </div>
           <div className="flex items-center justify-between">
-            <Label
-              htmlFor="pouch-visible"
-              className="text-body text-gray-900 font-semibold"
-            >
+            <Label htmlFor="pouch-visible" className="text-body font-semibold">
               다른 유저 조회 가능
             </Label>
             <Switch
@@ -112,7 +107,9 @@ export default function SettingsSheet() {
             />
           </div>
         </div>
-        <SheetFooter className="mt-auto">
+        <SheetFooter className="mt-auto  flex-col gap-8">
+          <LogoutButton className="mx-auto" />
+
           <Button
             variant="secondary"
             className="w-full"

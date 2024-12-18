@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { memberAPI } from "@/api/member";
@@ -17,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function MemberJoin() {
   const history = useHistory();
@@ -27,13 +27,22 @@ export default function MemberJoin() {
       nickname: "",
       email: "",
       password: "",
+      terms1: false,
+      terms2: false,
     },
   });
+  const watchTerms = form.watch(["terms1", "terms2"]);
 
-  function onSubmit(values: z.infer<typeof memberJoin>) {
+  const handleAgreeAllChange = (checked: boolean) => {
+    form.setValue("terms1", checked);
+    form.setValue("terms2", checked);
+  };
+
+  function onSubmit(values: MemberJoinFormType) {
     const joinParams: MemberJoinParam = {
-      ...values,
+      nickname: values.nickname,
       email: values.email as `${string}@${string}`,
+      password: values.password,
     };
     memberAPI.join(joinParams).then((res) => {
       const data = res.data;
@@ -45,7 +54,7 @@ export default function MemberJoin() {
   }
 
   return (
-    <>
+    <div className="text-white">
       <div className="text-center pt-20 pb-10 mb-3">
         <h3 className="text-h3">
           내 스스로 난 <span className="text-primary">어떤 사람</span>이었는지
@@ -105,9 +114,59 @@ export default function MemberJoin() {
               </FormItem>
             )}
           />
+
+          <div className="border-t border-gray-300 pt-4">
+            <div className="flex items-center mb-4">
+              <Checkbox
+                id="termsAgreeAll"
+                checked={watchTerms.every(Boolean)}
+                onCheckedChange={(checked) =>
+                  handleAgreeAllChange(checked as boolean)
+                }
+              />
+              <label htmlFor="termsAgreeAll" className="ml-2 text-sm">
+                전체동의
+              </label>
+            </div>
+            <FormField
+              control={form.control}
+              name="terms1"
+              render={({ field }) => (
+                <FormItem className="flex gap-3 space-y-0 mb-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-0 leading-none">
+                    <FormLabel>약관1에 동의합니다.</FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="terms2"
+              render={({ field }) => (
+                <FormItem className="flex gap-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-0 leading-none">
+                    <FormLabel>약관2에 동의합니다.</FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+          </div>
+
           <Button type="submit">회원가입</Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 }

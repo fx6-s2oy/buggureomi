@@ -20,7 +20,7 @@ export default function Header() {
   }, [history]);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between pt-4">
       <BackHeader />
       {isMainPage && <SettingsSheet />}
     </div>
