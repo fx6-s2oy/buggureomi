@@ -44,7 +44,7 @@ export default function MemberJoin() {
       email: values.email as `${string}@${string}`,
       password: values.password,
     };
-    memberAPI.join(joinParams).then((res) => {
+    memberAPI.emailJoin(joinParams).then((res) => {
       const data = res.data;
 
       if (data.status === "OK") {

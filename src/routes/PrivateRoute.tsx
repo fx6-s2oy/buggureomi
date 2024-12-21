@@ -8,8 +8,8 @@ interface PrivateRouteProps extends RouteProps {
 }
 
 export default function PrivateRoute({ children }: PrivateRouteProps) {
-  const { userId } = useUserStore();
-  const isAuthenticated: boolean = !!userId;
+  const { userInfo } = useUserStore();
+  const isAuthenticated: boolean = !!userInfo?.id;
 
   if (isAuthenticated) {
     return children;

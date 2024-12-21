@@ -16,10 +16,16 @@ export type MemberLoginParam = {
 export type MemberLoginResponse = BaseResponse<{ id: number }>;
 
 export type MemberSearchResponse = BaseResponse<{
-  id: string;
+  id: number;
   nickname: string;
   email: string;
   isPublicVisible: 0 | 1;
   isCountVisible: 0 | 1;
   isAuthRequired: 0 | 1;
+}>;
+
+export type GetTokenParam = { code: string };
+export type GetTokenResponse = BaseResponse<{
+  accessToken: string;
+  refreshToken: string;
 }>;

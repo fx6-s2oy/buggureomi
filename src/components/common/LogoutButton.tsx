@@ -2,16 +2,19 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import { useUserStore } from "@/store/userStore";
+import { tokenCookie } from "@/lib/authToken";
 
 type Props = {
   className?: string;
 };
 
 export default function LogoutButton({ className }: Props) {
-  const { clearUser } = useUserStore();
+  const { clearUserInfo } = useUserStore();
 
   const logout = () => {
-    clearUser();
+    clearUserInfo();
+    tokenCookie.deleteCookie("accessToken");
+    tokenCookie.deleteCookie("refreshToken");
   };
 
   return (

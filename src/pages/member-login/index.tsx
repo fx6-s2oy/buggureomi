@@ -36,7 +36,7 @@ export default function MemberLogin() {
   });
 
   function onSubmit(values: MemberLoginParam) {
-    memberAPI.login(values).then((res) => {
+    memberAPI.emailLogin(values).then((res) => {
       const data = res.data;
 
       if (data.status === "OK") {

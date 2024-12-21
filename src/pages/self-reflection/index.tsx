@@ -77,7 +77,7 @@ export default function SelfReflection() {
   const [step, setStep] = useState(1);
 
   const history = useHistory();
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
 
   const form = useForm<z.infer<typeof selfReflectionSchema>>({
     resolver: zodResolver(selfReflectionSchema),
@@ -113,7 +113,7 @@ export default function SelfReflection() {
   };
 
   const confirmSubmission = async () => {
-    if (!userId) return;
+    if (!userInfo?.id) return;
     const formData = form.getValues();
 
     const reflections = [
@@ -125,7 +125,7 @@ export default function SelfReflection() {
     ].filter((item) => item.questionId);
 
     try {
-      await selfReflection.submitReflections(userId, reflections);
+      await selfReflection.submitReflections(userInfo.id, reflections);
       toast({
         title: "제출 완료",
         description: "회고가 성공적으로 저장되었습니다.",
@@ -144,11 +144,11 @@ export default function SelfReflection() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (!userId) return;
+      if (!userInfo?.id) return;
       try {
         const [questionsRes, answersRes] = await Promise.all([
           selfReflection.getCommonQuestions(),
-          selfReflection.getSelfReflection(userId),
+          selfReflection.getSelfReflection(userInfo.id),
         ]);
         setQuestions(questionsRes.data.data);
         setExistingAnswers(answersRes.data.data);
@@ -161,10 +161,10 @@ export default function SelfReflection() {
       }
     };
 
-    if (userId) {
+    if (userInfo?.id) {
       fetchQuestions();
     }
-  }, [userId, toast]);
+  }, [userInfo, toast]);
 
   return (
     <div className="w-full h-screen">

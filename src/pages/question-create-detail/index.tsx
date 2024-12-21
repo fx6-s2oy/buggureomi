@@ -14,16 +14,16 @@ export default function QuestionCreateDetail() {
   const { state } = useLocation<{ content: string }>();
   const history = useHistory();
 
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
 
-  if (!userId) {
+  if (!userInfo?.id) {
     return <DirectLogin />;
   }
 
   const handleClick = () => {
     questionAPI
       .create({
-        memberId: userId,
+        memberId: userInfo.id,
         content: state?.content ?? "",
         isPublicVisible: 1,
         isCountVisible: 1,

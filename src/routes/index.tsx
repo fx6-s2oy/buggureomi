@@ -3,7 +3,8 @@ import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 import Main from "@/pages/main";
 
 import MemberJoin from "@/pages/member-join";
-import MemberLogin from "@/pages/member-login";
+import MemberLogin from "@/pages/login-sso";
+import OAuth from "@/pages/oauth";
 
 import QuestionCreate from "@/pages/question-create";
 import QuestionCreateDetail from "@/pages/question-create-detail";
@@ -27,6 +28,8 @@ export default function Routing() {
 
             <Route exact path="/member-login" render={() => <MemberLogin />} />
             <Route exact path="/member-join" render={() => <MemberJoin />} />
+
+            <Route exact path="/oauth/kakao/pending" render={() => <OAuth />} />
 
             <Route
               exact

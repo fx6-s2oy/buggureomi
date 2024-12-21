@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 
-import { userInfo } from "@/api/settings";
+import { userAPI } from "@/api/settings";
 import { MemberSettings } from "@/types/member";
 
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ import LogoutButton from "@/components/common/LogoutButton";
 import { useUserStore } from "@/store/userStore";
 
 export default function SettingsSheet() {
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
   const [open, setOpen] = useState(false);
 
   const [settings, setSettings] = useState<MemberSettings>({
@@ -36,7 +36,7 @@ export default function SettingsSheet() {
     };
 
     try {
-      if (userId) await userInfo.updateSettings(userId, newSettings);
+      if (userInfo?.id) await userAPI.updateSettings(userInfo.id, newSettings);
       setSettings(newSettings);
     } catch (error) {
       setSettings(settings);
@@ -46,8 +46,8 @@ export default function SettingsSheet() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        if (userId) {
-          const response = await userInfo.getSettings(userId);
+        if (userInfo?.id) {
+          const response = await userAPI.getSettings(userInfo.id);
           const { isPublicVisible, isCountVisible, isAuthRequired } =
             response.data.data;
           setSettings({ isPublicVisible, isCountVisible, isAuthRequired });
@@ -57,7 +57,7 @@ export default function SettingsSheet() {
       }
     };
     fetchSettings();
-  }, [userId]);
+  }, [userInfo]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -107,7 +107,7 @@ export default function SettingsSheet() {
             />
           </div>
         </div>
-        <SheetFooter className="mt-auto  flex-col gap-8">
+        <SheetFooter className="mt-auto !flex-col gap-8">
           <LogoutButton className="mx-auto" />
 
           <Button

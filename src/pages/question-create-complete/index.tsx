@@ -12,9 +12,9 @@ export default function QuestionCreateComplete() {
   const { state } = useLocation<{ questionId: number }>();
   const history = useHistory();
 
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
 
-  if (!userId || !state.questionId) {
+  if (!userInfo?.id || !state.questionId) {
     return <DirectLogin />;
   }
 
@@ -34,7 +34,7 @@ export default function QuestionCreateComplete() {
 
       <div className="flex gap-1">
         <Button onClick={() => history.push("/main")}>메인 이동</Button>
-        <ShareButton userId={userId} />
+        <ShareButton userId={userInfo.id} />
       </div>
     </div>
   );

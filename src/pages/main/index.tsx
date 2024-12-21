@@ -19,11 +19,11 @@ export default function Main() {
   const [question, setQuestion] = useState<Question>();
   const [nickname, setNickname] = useState<string>("");
 
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
 
   useEffect(() => {
-    if (userId) {
-      answerAPI.list({ userId }).then((res) => {
+    if (userInfo?.id) {
+      answerAPI.list({ userId: userInfo.id }).then((res) => {
         const data = res.data;
         if (data.data.list?.length) {
           setAnswers(data.data.list);
@@ -31,22 +31,22 @@ export default function Main() {
         setNickname(data.data.nickname);
       });
     }
-  }, [userId]);
+  }, [userInfo]);
 
   useEffect(() => {
-    if (userId) {
-      questionAPI.getQuestion(userId).then((res) => {
+    if (userInfo?.id) {
+      questionAPI.getQuestion(userInfo.id).then((res) => {
         const data = res.data.data;
         if (data) {
           setQuestion(data);
         }
       });
     }
-  }, [userId]);
+  }, [userInfo]);
 
   const answerCount = answers.length;
   const previewMessage = answers[getRandomIndex(answers)];
-  const hasUserId = userId != null;
+  const hasUserId = userInfo?.id != null;
 
   const history = useHistory();
 
@@ -65,10 +65,10 @@ export default function Main() {
             {nickname}님의 보따리에
           </h2>
           {answerCount < 1 ? (
-            <WithoutAnswer userId={userId} />
+            <WithoutAnswer userId={userInfo.id} />
           ) : (
             <WithAnswer
-              userId={userId}
+              userId={userInfo.id}
               answerCount={answerCount}
               previewMessage={previewMessage}
             />

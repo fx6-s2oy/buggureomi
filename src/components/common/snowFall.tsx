@@ -19,10 +19,10 @@ const Snowfall = () => {
     });
   };
 
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
   useEffect(() => {
-    if (userId) handleSnowflakeColor(userId);
-  }, [userId]);
+    if (userInfo?.id) handleSnowflakeColor(userInfo?.id);
+  }, [userInfo]);
 
   return (
     <>

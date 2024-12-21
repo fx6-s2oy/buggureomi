@@ -24,10 +24,10 @@ export default function AnswerResult() {
     });
   };
 
-  const { userId } = useUserStore();
+  const { userInfo } = useUserStore();
   useEffect(() => {
-    if (userId) getAnswersData(userId);
-  }, [userId]);
+    if (userInfo?.id) getAnswersData(userInfo.id);
+  }, [userInfo]);
 
   const handleDialogToggle = (marble?: Answer) => {
     setIsDetailDialogOpen(!isDetailDialogOpen);
@@ -39,7 +39,7 @@ export default function AnswerResult() {
 
   const handleDeleteSuccess = () => {
     handleDialogToggle();
-    if (userId) getAnswersData(userId);
+    if (userInfo?.id) getAnswersData(userInfo.id);
   };
 
   return (

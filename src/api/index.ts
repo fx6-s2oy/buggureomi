@@ -4,6 +4,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+import { tokenCookie } from "@/lib/authToken";
+
 const BASE_URL: string = import.meta.env.VITE_API_HOST;
 const VERSION = import.meta.env.VITE_API_VERSION;
 
@@ -18,7 +20,6 @@ const createAxios = (): AxiosInstance => {
 };
 
 // TODO: token 세팅 후 코드 수정 필요
-const token = "";
 const interceptors = (): AxiosInstance => {
   const instance = axios.create({
     baseURL: BASE_URL + VERSION,
@@ -29,7 +30,9 @@ const interceptors = (): AxiosInstance => {
       if (!config.headers) {
         config.headers = new AxiosHeaders();
       }
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${tokenCookie.getCookie(
+        "accessToken"
+      )}`;
       return config;
     },
     (error) => {
