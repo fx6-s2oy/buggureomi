@@ -3,16 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDialog } from "@/pages/self-reflection/components/ConfirmDialog";
 import { selfReflectionSchema } from "@/pages/self-reflection/schemas/reflectionSchema";
 import { useToast } from "@/hooks/use-toast";
@@ -22,47 +17,55 @@ import {
   ReflectionAnswer,
   ReflectionQuestion,
 } from "@/api/self-reflection/type";
-import ReadOnlyReflection from "@/pages/self-reflection/ReadOnlyReflection";
 
 import { useUserStore } from "@/store/userStore";
-
-const DESCRIPTION = {
-  WRITE: "수정이 불가능하니 나를 깊게 돌아봐주세요",
-  READ: "이전에 작성한 나의 회고입니다",
-} as const;
+import TextFieldWrapper from "@/components/common/TextFieldWrapper";
+import { FunnelForm } from "@/components/FunnelForm/FunnelForm";
 
 const FORM_FIELDS = [
   {
     name: "regret",
     label: "올해 가장 후회되는 일은?",
     placeholder: "후회되는 일을 적어주세요",
-    type: "input",
+    type: "textarea",
+    size: "s",
   },
   {
     name: "bestThing",
     label: "올해 가장 잘한 일은?",
     placeholder: "잘한 일을 적어주세요",
-    type: "input",
+    type: "textarea",
+    size: "s",
   },
   {
     name: "nextYearGoal",
     label: "내년에는 이것만큼은 꼭 해내야지!",
     placeholder: "내년의 목표를 적어주세요",
-    type: "input",
+    type: "textarea",
+    size: "s",
   },
   {
     name: "message2024",
     label: "2024년의 나에게 하고싶은 한마디",
     placeholder: "2024년의 나에게 메시지를 남겨주세요",
     type: "textarea",
+    size: "l",
   },
   {
     name: "message2025",
     label: "2025년의 나에게 하고 싶은 한마디",
     placeholder: "2025년의 나에게 메시지를 남겨주세요",
     type: "textarea",
+    size: "l",
   },
 ] as const;
+
+type Step = 1 | 2;
+type FormField = (typeof FORM_FIELDS)[number];
+type StepNumber = 1 | 2;
+type StepFields = {
+  [K in StepNumber]: FormField[];
+};
 
 export default function SelfReflection() {
   const { toast } = useToast();
@@ -71,6 +74,7 @@ export default function SelfReflection() {
   const [existingAnswers, setExistingAnswers] = useState<ReflectionAnswer[]>(
     []
   );
+  const [step, setStep] = useState(1);
 
   const history = useHistory();
   const { userId } = useUserStore();
@@ -86,9 +90,27 @@ export default function SelfReflection() {
     },
   });
 
-  function onSubmit() {
+  const STEP_FIELDS: StepFields = {
+    1: FORM_FIELDS.slice(0, 3),
+    2: FORM_FIELDS.slice(3),
+  };
+
+  const handlePrev = () => {
+    setStep(1);
+  };
+
+  const handleNext = () => {
+    const currentFields = ["regret", "bestThing", "nextYearGoal"] as const;
+    form.trigger(currentFields).then((isValid) => {
+      if (isValid) {
+        setStep(2);
+      }
+    });
+  };
+
+  const handleSubmit = () => {
     setShowConfirmModal(true);
-  }
+  };
 
   const confirmSubmission = async () => {
     if (!userId) return;
@@ -145,46 +167,45 @@ export default function SelfReflection() {
   }, [userId, toast]);
 
   return (
-    <div className="w-full">
-      <h3 className="text-h3 text-gray-900">나 돌아보기</h3>
-      <p className="text-body text-destructive">
-        {existingAnswers.length > 0 ? DESCRIPTION.READ : DESCRIPTION.WRITE}
-      </p>
-      {existingAnswers.length > 0 ? (
-        <ReadOnlyReflection answers={existingAnswers} questions={questions} />
-      ) : (
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {FORM_FIELDS.map(({ name, label, placeholder, type }) => (
-              <FormField
-                key={name}
-                control={form.control}
-                name={name as keyof z.infer<typeof selfReflectionSchema>}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-900">{label}</FormLabel>
-                    <FormControl>
-                      {type === "input" ? (
-                        <Input placeholder={placeholder} {...field} />
-                      ) : (
-                        <Textarea placeholder={placeholder} {...field} />
-                      )}
-                    </FormControl>
-                    <FormMessage className="text-destructive" />
-                  </FormItem>
-                )}
-              />
-            ))}
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={!form.formState.isValid || form.formState.isSubmitting}
-            >
-              제출하기
-            </Button>
-          </form>
-        </Form>
-      )}
+    <div className="w-full h-screen">
+      <h2 className="text-h2 text-white text-center mb-6">나 돌아보기</h2>
+
+      <FunnelForm
+        currentStep={step}
+        totalSteps={2}
+        form={form}
+        onNext={handleNext}
+        onSubmit={handleSubmit}
+        onPrev={handlePrev}
+        isReadOnly={existingAnswers.length > 0}
+      >
+        {STEP_FIELDS[step as Step].map(
+          ({ name, label, placeholder, size, type }) => (
+            <FormField
+              key={name}
+              control={form.control}
+              name={name as keyof z.infer<typeof selfReflectionSchema>}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <TextFieldWrapper
+                      title={label}
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={placeholder}
+                      size={size}
+                      multiline={type === "textarea"}
+                      maxLength={300}
+                      isReadOnly={existingAnswers.length > 0}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive" />
+                </FormItem>
+              )}
+            />
+          )
+        )}
+      </FunnelForm>
       <ConfirmDialog
         open={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}

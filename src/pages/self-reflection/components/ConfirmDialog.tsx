@@ -2,8 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
@@ -22,18 +20,21 @@ export function ConfirmDialog({
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>제출 확인</DialogTitle>
-          <DialogDescription>
-            정말로 제출하시겠습니까? 제출 후에는 수정이 불가능합니다.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:gap-0 sm:justify-end">
-          <Button onClick={onClose} variant="outline">
-            취소
+        <DialogDescription>
+          <h2 className="text-h2 font-medium text-gray-900">
+            저장한 후엔
+            <span className="text-primary font-bold"> 수정이 불가능</span>
+            해요.
+            <br />
+            신중하게 한 해를 돌아보셨나요?
+          </h2>
+        </DialogDescription>
+        <DialogFooter>
+          <Button variant="default" className="w-full" onClick={onConfirm}>
+            확인했어요.
           </Button>
-          <Button onClick={onConfirm} className="bg-primary text-white">
-            확인
+          <Button variant="secondary" className="w-full" onClick={onClose}>
+            다시 돌아볼게요.
           </Button>
         </DialogFooter>
       </DialogContent>
