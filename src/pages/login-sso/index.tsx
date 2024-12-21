@@ -1,20 +1,27 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import { memberAPI } from "@/api/member";
+import { useUserStore } from "@/store/userStore";
 
 import { Button } from "@/components/ui/button";
 import kakao_login_button from "@/assets/image/login/kakao_login_medium_wide.png";
 import buggu_main_image from "@/assets/image/buggu_standing_front.png";
 
 export default function MemberLogin() {
-  const { state } = useLocation<{ userId: number; questionId: number }>();
-  console.log(state);
+  const { userInfo } = useUserStore();
 
   const history = useHistory();
 
   function goToJoinPage() {
     history.push("/member-join");
   }
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/main");
+    }
+  });
 
   return (
     <>

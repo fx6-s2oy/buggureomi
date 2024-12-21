@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 import { memberAPI } from "@/api/member";
 import { MemberLoginParam } from "@/api/member/type";
 
-import { useUserStore } from "@/store/userStore";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,8 +21,6 @@ export default function MemberLogin() {
   const { state } = useLocation<{ userId: number; questionId: number }>();
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const { setUserId } = useUserStore();
-
   console.log(state);
   const history = useHistory();
 
@@ -40,9 +36,6 @@ export default function MemberLogin() {
       const data = res.data;
 
       if (data.status === "OK") {
-        // store에 userId 저장
-        setUserId(data.data.id);
-
         if (state?.userId && state?.questionId) {
           // COMMENT: 답변 작성 페이지에서 로그인 페이지로 유도한 경우 로그인 성공시 다시 답변 페이지로 redirection
           history.push({

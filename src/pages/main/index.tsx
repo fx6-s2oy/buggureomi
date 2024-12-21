@@ -23,7 +23,7 @@ export default function Main() {
 
   useEffect(() => {
     if (userInfo?.id) {
-      answerAPI.list({ userId: userInfo.id }).then((res) => {
+      answerAPI.list().then((res) => {
         const data = res.data;
         if (data.data.list?.length) {
           setAnswers(data.data.list);

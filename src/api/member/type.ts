@@ -29,3 +29,9 @@ export type GetTokenResponse = BaseResponse<{
   accessToken: string;
   refreshToken: string;
 }>;
+
+export type RefreshTokenParam = { refreshToken: string };
+export type RefreshTokenResponse = BaseResponse<{
+  accessToken: string;
+  refreshToken: string;
+}>;

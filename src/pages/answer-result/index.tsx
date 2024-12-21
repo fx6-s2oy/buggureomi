@@ -14,8 +14,8 @@ export default function AnswerResult() {
 
   const [answersData, setAnswersData] = useState<Answer[]>();
 
-  const getAnswersData = async (userId: number) => {
-    await answerAPI.list({ userId }).then((res) => {
+  const getAnswersData = async () => {
+    await answerAPI.list().then((res) => {
       const data = res.data;
 
       if (data.status === "OK" && data.data.list) {
@@ -26,7 +26,7 @@ export default function AnswerResult() {
 
   const { userInfo } = useUserStore();
   useEffect(() => {
-    if (userInfo?.id) getAnswersData(userInfo.id);
+    if (userInfo?.id) getAnswersData();
   }, [userInfo]);
 
   const handleDialogToggle = (marble?: Answer) => {
@@ -39,7 +39,7 @@ export default function AnswerResult() {
 
   const handleDeleteSuccess = () => {
     handleDialogToggle();
-    if (userInfo?.id) getAnswersData(userInfo.id);
+    if (userInfo?.id) getAnswersData();
   };
 
   return (

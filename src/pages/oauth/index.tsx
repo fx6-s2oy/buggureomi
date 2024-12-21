@@ -19,7 +19,7 @@ export default function OAuth() {
       if (res.data.status === "OK") {
         if (data) {
           tokenCookie.setCookie("accessToken", data.data.accessToken, 0.25);
-          tokenCookie.setCookie("refreshToken", data.data.accessToken, 1);
+          tokenCookie.setCookie("refreshToken", data.data.refreshToken, 1);
         }
       }
 
