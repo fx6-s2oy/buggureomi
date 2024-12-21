@@ -10,9 +10,13 @@ import WithAnswer from "./components/WithAnswer";
 import NonLoggedSection from "./components/NonLoggedSection";
 
 import { useUserStore } from "@/store/userStore";
+import { Question } from "@/types/question";
+import { questionAPI } from "@/api/question";
+import { useHistory } from "react-router-dom";
 
 export default function Main() {
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const [question, setQuestion] = useState<Question>();
   const [nickname, setNickname] = useState<string>("");
 
   const { userId } = useUserStore();
@@ -29,9 +33,27 @@ export default function Main() {
     }
   }, [userId]);
 
+  useEffect(() => {
+    if (userId) {
+      questionAPI.getQuestion(userId).then((res) => {
+        const data = res.data.data;
+        if (data) {
+          setQuestion(data);
+        }
+      });
+    }
+  }, [userId]);
+
   const answerCount = answers.length;
   const previewMessage = answers[getRandomIndex(answers)];
   const hasUserId = userId != null;
+
+  const history = useHistory();
+
+  if (!question) {
+    history.replace("/question-create");
+    return null;
+  }
 
   return (
     <>
@@ -39,7 +61,9 @@ export default function Main() {
         <NonLoggedSection />
       ) : (
         <section className="flex flex-col justify-center items-center h-screen">
-          <h2 className="font-bold text-2xl mb-2">{nickname}님의 보따리</h2>
+          <h2 className="font-bold text-h2 mb-2 text-white">
+            {nickname}님의 보따리에
+          </h2>
           {answerCount < 1 ? (
             <WithoutAnswer userId={userId} />
           ) : (

@@ -34,7 +34,7 @@ export default function QuestionCreateComplete() {
 
       <div className="flex gap-1">
         <Button onClick={() => history.push("/main")}>메인 이동</Button>
-        <ShareButton userId={userId} questionId={state.questionId} />
+        <ShareButton userId={userId} />
       </div>
     </div>
   );

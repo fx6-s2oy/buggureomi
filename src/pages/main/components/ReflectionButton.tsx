@@ -13,7 +13,11 @@ export function ReflectionButton({ userId }: ReflectionButtonProps) {
   if (isLoading) return null;
 
   return (
-    <Button onClick={() => history.push("/self-reflection")}>
+    <Button
+      variant={"secondary"}
+      className="w-full"
+      onClick={() => history.push("/self-reflection")}
+    >
       {hasReflection ? "내가 생각한 나" : "나 돌아보기"}
     </Button>
   );

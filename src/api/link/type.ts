@@ -1,7 +1,5 @@
 export type ShareLinkParam = {
   pageUrl: string;
-  width: number;
-  height: number;
 };
 
 export type ShareLinkResponse = {

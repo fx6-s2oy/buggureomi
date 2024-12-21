@@ -10,4 +10,11 @@ export const questionAPI = {
 
     return res;
   },
+
+  getQuestion: async (
+    userId: number
+  ): Promise<AxiosResponse<T.QuestionGetResponse>> => {
+    const res = await api.get(`/question/${userId}`);
+    return res;
+  },
 };
