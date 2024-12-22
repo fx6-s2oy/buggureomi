@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { BUNDEL_IMAGE_URL } from "@/constant/image";
 
 import { useUserStore } from "@/store/userStore";
+import { ShareDialog } from "@/components/share/ShareDialog";
 
 export default function QuestionCreateComplete() {
   const { state } = useLocation<{ questionId: number }>();
@@ -34,8 +35,9 @@ export default function QuestionCreateComplete() {
 
       <div className="flex gap-1">
         <Button onClick={() => history.push("/main")}>메인 이동</Button>
-        <ShareButton userId={userInfo.id} />
+        <ShareButton />
       </div>
+      <ShareDialog userId={userInfo.id} />
     </div>
   );
 }

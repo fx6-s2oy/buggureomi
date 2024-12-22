@@ -16,6 +16,7 @@ import SelfReflection from "@/pages/self-reflection";
 import QuestionComplete from "@/pages/question-complete";
 import PrivateRoute from "@/routes/PrivateRoute";
 import RootLayout from "@/components/RootLayout";
+import { DialogProvider } from "@/contexts/DialogContext";
 
 export default function Routing() {
   return (
@@ -64,7 +65,9 @@ export default function Routing() {
               path="/question-create-complete"
               render={() => (
                 <PrivateRoute>
-                  <QuestionCreateComplete />
+                  <DialogProvider>
+                    <QuestionCreateComplete />
+                  </DialogProvider>
                 </PrivateRoute>
               )}
             />
