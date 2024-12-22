@@ -3,6 +3,8 @@ import { IoMdSettings } from "react-icons/io";
 
 import { userAPI } from "@/api/settings";
 import { MemberSettings } from "@/types/member";
+import { FaPen } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -18,16 +20,45 @@ import {
 import LogoutButton from "@/components/common/LogoutButton";
 
 import { useUserStore } from "@/store/userStore";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 export default function SettingsSheet() {
-  const { userInfo } = useUserStore();
+  const { userInfo, setUserInfo } = useUserStore();
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [nickname, setNickname] = useState(userInfo?.nickname || "");
 
   const [settings, setSettings] = useState<MemberSettings>({
     isPublicVisible: 0,
     isCountVisible: 0,
     isAuthRequired: 0,
   });
+
+  const handleUpdateNickname = async () => {
+    try {
+      await userAPI.updateNickname({ nickname: nickname });
+      toast({
+        description: "닉네임 수정에 성공했습니다.",
+      });
+      setIsEditMode(false);
+      if (userInfo) {
+        setUserInfo({
+          ...userInfo,
+          nickname: nickname,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        description: "닉네임 수정에 실패했습니다.",
+        variant: "destructive",
+      });
+      setNickname(userInfo?.nickname || "");
+    }
+  };
 
   const handleUpdateSetting = async (key: keyof MemberSettings) => {
     const newSettings = {
@@ -59,8 +90,40 @@ export default function SettingsSheet() {
     fetchSettings();
   }, [userInfo]);
 
+  useEffect(() => {
+    setNickname(userInfo?.nickname || "");
+  }, [userInfo?.nickname]);
+
+  const resetSheetState = () => {
+    setIsEditMode(false);
+    setNickname(userInfo?.nickname || "");
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+    if (!open) {
+      resetSheetState();
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    resetSheetState();
+  };
+
+  const handleNicknameButtonClick = () => {
+    if (!isEditMode) {
+      setIsEditMode(true);
+      return;
+    }
+
+    if (nickname !== userInfo?.nickname) {
+      handleUpdateNickname();
+    }
+  };
+
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <button>
           <IoMdSettings size={32} color="#F0F0F0" />
@@ -76,6 +139,37 @@ export default function SettingsSheet() {
           </div>
         </SheetHeader>
         <div className="space-y-5">
+          <div className="flex gap-2">
+            <Input
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              disabled={!isEditMode}
+              className={cn(
+                "bg-[#2D3241] border-none disabled:opacity-100",
+                isEditMode ? "text-white" : "text-[#868686]"
+              )}
+            />
+            <button
+              className={cn(
+                "bg-white p-3 rounded-xl",
+                (isEditMode && !nickname.trim()) ||
+                  (isEditMode && nickname === userInfo?.nickname)
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              )}
+              onClick={handleNicknameButtonClick}
+              disabled={
+                (isEditMode && nickname === userInfo?.nickname) ||
+                (isEditMode && !nickname.trim())
+              }
+            >
+              {isEditMode ? (
+                <FaCheck size={16} color={"#667EF5"} />
+              ) : (
+                <FaPen size={16} color="#323748" />
+              )}
+            </button>
+          </div>
           <div className="flex items-center justify-between">
             <Label htmlFor="marble-count" className="text-body font-semibold">
               구슬(답변) 개수 공개
@@ -110,11 +204,7 @@ export default function SettingsSheet() {
         <SheetFooter className="mt-auto !flex-col gap-8">
           <LogoutButton className="mx-auto" />
 
-          <Button
-            variant="secondary"
-            className="w-full"
-            onClick={() => setOpen(false)}
-          >
+          <Button variant="secondary" className="w-full" onClick={handleClose}>
             닫기
           </Button>
         </SheetFooter>
