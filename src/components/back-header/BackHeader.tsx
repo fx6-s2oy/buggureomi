@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ArrowLeft } from "lucide-react";
+import { FaArrowLeft } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { useHistory } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function BackHeader({ children, className }: Props) {
   return (
     <header className={cn("relative", className)}>
       <button onClick={handleBack}>
-        <ArrowLeft size={32} color="#F0F0F0" />
+        <FaArrowLeft size={32} color="#F0F0F0" />
       </button>
       {children}
     </header>

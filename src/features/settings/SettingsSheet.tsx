@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Settings } from "lucide-react";
+import { IoMdSettings } from "react-icons/io";
 
 import { userAPI } from "@/api/settings";
 import { MemberSettings } from "@/types/member";
@@ -63,13 +63,13 @@ export default function SettingsSheet() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button>
-          <Settings size={32} color="#F0F0F0" />
+          <IoMdSettings size={32} color="#F0F0F0" />
         </button>
       </SheetTrigger>
       <SheetContent className="w-[300px] bg-[#373A4D] opacity-90 flex flex-col rounded-l-sheet p-10 border-none text-white">
         <SheetHeader className="pb-4">
           <div className="flex justify-center items-center gap-2">
-            <Settings size={24} />
+            <IoMdSettings size={24} />
             <SheetTitle>
               <h2 className="text-h2 text-white flex items-center">설정</h2>
             </SheetTitle>

@@ -100,6 +100,9 @@ export default {
           },
         ],
       },
+      boxShadow: {
+        "custom-inner": "inset 2px 2px 4px rgba(0, 0, 0, 0.25)",
+      },
       keyframes: {
         "slide-up": {
           "0%": { transform: "translateY(100%)" },

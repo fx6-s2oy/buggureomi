@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "../ui/button";
 import { getLink } from "@/api/link";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "lucide-react";
+import { FaLink } from "react-icons/fa6";
 import { SHARE_LINK_PARAM } from "@/constant/link";
 
 type Props = {
@@ -31,7 +31,7 @@ export default function ShareButton({ className, userId, children }: Props) {
 
   return (
     <Button onClick={copyShareLinkAddress} className={cn(className)}>
-      <Link />
+      <FaLink style={{ width: "24px", height: "auto" }} />
       {children}
     </Button>
   );

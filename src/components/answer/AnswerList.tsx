@@ -1,5 +1,4 @@
 import { ScrollArea } from "../ui/scroll-area";
-
 import AnswerCard from "./AnswerCard";
 
 import { Answer } from "@/types/answer";
@@ -15,7 +14,7 @@ export default function AnswerList({ listData, onDialogOpen }: Props) {
 
   return (
     <ScrollArea className="h-[580px]">
-      <div className="flex flex-col gap-3 px-3">
+      <div className="flex flex-col gap-4 px-3">
         {Answer &&
           Answer.map((marble) => {
             return (

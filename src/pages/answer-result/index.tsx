@@ -45,11 +45,11 @@ export default function AnswerResult() {
   return (
     <>
       <div>
-        <div className="text-center pt-20 pb-10 mb-3">
-          <h2 className="text-h2 text-primary">사용자님의 보따리</h2>
-          <h5 className="text-h5">
+        <div className="text-center pt-20 pb-10 mb-3 text-white">
+          <h2 className="text-h2">{userInfo?.nickname}님의 보따리</h2>
+          <h2 className="text-h2">
             {answersData ? answersData.length : 0}개의 답변이 담겨 있어요!
-          </h5>
+          </h2>
         </div>
         {answersData && (
           <AnswerList

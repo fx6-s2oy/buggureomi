@@ -7,7 +7,6 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
 type Props = {
@@ -36,18 +35,21 @@ export default function AnswerDeleteDialog({
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>정말 구슬을 깨트릴까요?</AlertDialogTitle>
+        <AlertDialogHeader className="text-[24px] mt-3 mb-5">
+          <h2>
+            깨진 구슬은 <strong>복구할 수 없어요!</strong>
+          </h2>
+          <h2>정말 구슬을 깨트릴까요?</h2>
           <AlertDialogDescription>
-            <p>한 번 삭제된 구슬은 되돌릴 수 없어요!</p>
             <p>신중하게 결정하세요!</p>
           </AlertDialogDescription>
         </AlertDialogHeader>
+
         <AlertDialogFooter>
-          <AlertDialogCancel>취소</AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDeleteAnswer(targetId)}>
             삭제
           </AlertDialogAction>
+          <AlertDialogCancel>취소</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

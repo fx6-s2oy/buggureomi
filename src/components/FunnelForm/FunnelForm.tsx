@@ -1,4 +1,5 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -39,7 +40,7 @@ export function FunnelForm<T extends FieldValues>({
               className="w-full relative"
               onClick={onPrev}
             >
-              <ChevronLeft
+              <IoIosArrowBack
                 className="absolute left-4"
                 color="#667EF5"
                 size={14}
@@ -54,7 +55,7 @@ export function FunnelForm<T extends FieldValues>({
           ) : (
             <Button type="button" onClick={onNext} className="w-full relative">
               {`다음(${currentStep}/${totalSteps})`}
-              <ChevronRight
+              <IoIosArrowForward
                 className="absolute right-4"
                 size={132}
                 color="#FFFFFF"
