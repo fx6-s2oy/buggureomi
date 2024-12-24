@@ -25,11 +25,11 @@ export function useSelfReflection(userId: number) {
     };
 
     fetchSelfReflection();
-  }, [userId, toast]);
+  }, [userId]);
 
   return {
     selfReflection,
-    hasReflection: selfReflection.length > 0,
+    hasReflection: selfReflection?.length > 0,
     isLoading,
   };
 }

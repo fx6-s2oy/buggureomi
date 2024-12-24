@@ -4,21 +4,16 @@ import * as T from "./type";
 
 export const selfReflection = {
   getCommonQuestions: async (): Promise<AxiosResponse<T.QuestionResponse>> => {
-    return apiWithToken.get("/self-reflection/common-question");
+    return apiWithToken.get("/self-reflection/common-question/list");
   },
 
-  getSelfReflection: async (
-    userId: number
-  ): Promise<AxiosResponse<T.GetReflectionAnswerResponse>> => {
-    return apiWithToken.get(`/self-reflection/${userId}/list`);
+  getSelfReflection: async (): Promise<
+    AxiosResponse<T.GetReflectionAnswerResponse>
+  > => {
+    return apiWithToken.get(`/self-reflection/list`);
   },
 
-  submitReflections: async (
-    userId: number,
-    reflections: T.ReflectionRequest[]
-  ) => {
-    return apiWithToken.post(`/self-reflection/${userId}`, {
-      reflections,
-    });
+  submitReflections: async ({ reflections }: T.ReflectionParam) => {
+    return apiWithToken.post(`/self-reflection`, { reflections });
   },
 };

@@ -81,6 +81,13 @@ export default function SelfReflection() {
 
   const form = useForm<z.infer<typeof selfReflectionSchema>>({
     resolver: zodResolver(selfReflectionSchema),
+    values: {
+      regret: existingAnswers[0]?.content || "",
+      bestThing: existingAnswers[1]?.content || "",
+      nextYearGoal: existingAnswers[2]?.content || "",
+      message2024: existingAnswers[3]?.content || "",
+      message2025: existingAnswers[4]?.content || "",
+    },
     defaultValues: {
       regret: "",
       bestThing: "",
@@ -109,6 +116,11 @@ export default function SelfReflection() {
   };
 
   const handleSubmit = () => {
+    if (existingAnswers.length > 0) {
+      setShowConfirmModal(false);
+      return;
+    }
+
     setShowConfirmModal(true);
   };
 
@@ -117,15 +129,14 @@ export default function SelfReflection() {
     const formData = form.getValues();
 
     const reflections = [
-      { questionId: questions[0]?.id, content: formData.regret },
-      { questionId: questions[1]?.id, content: formData.bestThing },
-      { questionId: questions[2]?.id, content: formData.nextYearGoal },
-      { questionId: questions[3]?.id, content: formData.message2024 },
-      { questionId: questions[4]?.id, content: formData.message2025 },
-    ].filter((item) => item.questionId);
-
+      { id: questions[0]?.id, content: formData.regret },
+      { id: questions[1]?.id, content: formData.bestThing },
+      { id: questions[2]?.id, content: formData.nextYearGoal },
+      { id: questions[3]?.id, content: formData.message2024 },
+      { id: questions[4]?.id, content: formData.message2025 },
+    ].filter((item) => item.id);
     try {
-      await selfReflection.submitReflections(userInfo.id, reflections);
+      await selfReflection.submitReflections({ reflections });
       toast({
         title: "제출 완료",
         description: "회고가 성공적으로 저장되었습니다.",
@@ -148,7 +159,7 @@ export default function SelfReflection() {
       try {
         const [questionsRes, answersRes] = await Promise.all([
           selfReflection.getCommonQuestions(),
-          selfReflection.getSelfReflection(userInfo.id),
+          selfReflection.getSelfReflection(),
         ]);
         setQuestions(questionsRes.data.data);
         setExistingAnswers(answersRes.data.data);

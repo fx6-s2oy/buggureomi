@@ -5,9 +5,8 @@ export type ReflectionQuestion = {
   content: string;
 };
 
-export type ReflectionRequest = {
-  questionId: number;
-  content: string;
+export type ReflectionParam = {
+  reflections: ReflectionQuestion[];
 };
 
 export type QuestionResponse = BaseResponse<ReflectionQuestion[]>;

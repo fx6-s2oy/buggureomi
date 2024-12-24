@@ -3,6 +3,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useHistory } from "react-router-dom";
 
 type FunnelFormProps<T extends FieldValues> = {
   currentStep: number;
@@ -25,8 +26,16 @@ export function FunnelForm<T extends FieldValues>({
   isReadOnly,
   children,
 }: FunnelFormProps<T>) {
+  const history = useHistory();
   const isLastStep = currentStep === totalSteps;
-  const handleSubmit = isReadOnly ? () => {} : form.handleSubmit(onSubmit);
+
+  const handleSubmit = () => {
+    if (isReadOnly) {
+      history.push("/main");
+    } else {
+      form.handleSubmit(onSubmit)();
+    }
+  };
 
   return (
     <Form {...form}>
