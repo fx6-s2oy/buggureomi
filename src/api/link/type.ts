@@ -1,3 +1,5 @@
+import { ShareInfo } from "@/types/link";
+
 export type ShareLinkParam = {
   pageUrl: string;
 };
@@ -5,8 +7,5 @@ export type ShareLinkParam = {
 export type ShareLinkResponse = {
   status: "OK" | "BAD_REQUEST";
   message: string;
-  data: {
-    url: string;
-    qrCode: string;
-  };
+  data: ShareInfo;
 };

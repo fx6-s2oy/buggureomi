@@ -1,24 +1,21 @@
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "../ui/button";
-import { getLink } from "@/api/link";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "lucide-react";
-import { SHARE_LINK_PARAM } from "@/constant/link";
 
 type Props = {
-  userId: number;
+  url: string;
 } & ButtonProps;
 
-export default function CopyLinkButton({ className, userId }: Props) {
+export default function CopyURLButton({ className, url }: Props) {
   const { toast } = useToast();
 
   const copyShareLinkAddress = () => {
-    getLink(userId, SHARE_LINK_PARAM)
-      .then((data) => {
-        navigator.clipboard.writeText(data.data.url).then(() => {
-          toast({
-            description: "링크가 복사되었습니다",
-          });
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast({
+          description: "링크가 복사되었습니다",
         });
       })
       .catch(() => {
