@@ -6,7 +6,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import CopyURLButton from "./CopyURLButton";
-import { MessageCircle, QrCode } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useDialog } from "@/contexts/DialogContext";
 import { useEffect, useState } from "react";
 import { ShareInfo } from "@/types/link";
@@ -42,6 +42,13 @@ export function ShareDialog({ userId }: Props) {
               </h2>
             </DialogDescription>
             <DialogFooter>
+              <div className="flex justify-center">
+                <img
+                  src={`data:image/png;base64,${shareInfo.qrCode}`}
+                  width={200}
+                  height={200}
+                />
+              </div>
               <Button
                 className="bg-[#FEE500] text-[#3C1E1E]"
                 onClick={() => {
@@ -53,10 +60,7 @@ export function ShareDialog({ userId }: Props) {
                 <MessageCircle fill="#3C1E1E" size={48} />
                 카카오톡으로 공유하기
               </Button>
-              <Button variant="default" className="w-full">
-                <QrCode />
-                QR코드 공유하기
-              </Button>
+
               <CopyURLButton url={shareInfo.url} />
             </DialogFooter>
           </DialogContent>
