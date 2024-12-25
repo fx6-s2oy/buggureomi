@@ -6,7 +6,7 @@ import { useUserStore } from "@/store/userStore";
 
 import { Button } from "@/components/ui/button";
 import kakao_login_button from "@/assets/image/login/kakao_login_medium_wide.png";
-import buggu_main_image from "@/assets/image/buggu_standing_front.png";
+import mascot_front_standing from "@/shared/assets/mascot/mascot-front-standing.svg";
 
 export default function MemberLogin() {
   const { userInfo } = useUserStore();
@@ -32,7 +32,11 @@ export default function MemberLogin() {
 
       <div>
         <div className="w-[30%] mx-auto">
-          <img src={buggu_main_image} alt="부꾸 캐릭터" className="w-[100%]" />
+          <img
+            src={mascot_front_standing}
+            alt="부꾸 캐릭터"
+            className="w-[100%]"
+          />
         </div>
 
         <div className="text-center my-10 text-white font-nanum-dahaengce text-[23px]">

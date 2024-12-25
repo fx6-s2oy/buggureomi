@@ -6,7 +6,6 @@ export type QuestionCreateParam = {
   isPublicVisible: number;
   isCountVisible: number;
   isAuthRequired: number;
-  isCommonQuestion: number;
 };
 
 export type QuestionCreateResponse = BaseResponse<{

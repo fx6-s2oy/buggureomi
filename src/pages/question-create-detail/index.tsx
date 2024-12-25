@@ -1,76 +1,115 @@
-import { useLocation, useHistory } from "react-router-dom";
-
-import { questionAPI } from "@/api/question";
+import { useHistory, useLocation } from "react-router-dom";
 import { DirectLogin } from "@/components/display/DirectLogin";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-
-import { BUNDEL_IMAGE_URL } from "@/constant/image";
-
+import { QuestionBundle } from "@/components/question/QuestionBundle";
+import { questionAPI } from "@/api/question";
 import { useUserStore } from "@/store/userStore";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+
+interface QuestionContent {
+  content: string; // question의 타입에 따라 변경
+}
 
 export default function QuestionCreateDetail() {
-  const { state } = useLocation<{ content: string }>();
   const history = useHistory();
-
+  const location = useLocation<QuestionContent>();
+  const content = (location.state as QuestionContent)?.content;
   const { userInfo } = useUserStore();
+  const { toast } = useToast();
+
+  const [settings, setSettings] = useState({
+    isCountVisible: 1,
+    isAuthRequired: 1,
+    isPublicVisible: 1,
+  });
+
+  const handleUpdateSetting = (key: keyof typeof settings) => {
+    setSettings((prev) => ({
+      ...prev,
+      [key]: prev[key] === 1 ? 0 : 1,
+    }));
+  };
 
   if (!userInfo?.id) {
     return <DirectLogin />;
   }
 
-  const handleClick = () => {
-    questionAPI
-      .create({
-        memberId: userInfo.id,
-        content: state?.content ?? "",
-        isPublicVisible: 1,
-        isCountVisible: 1,
-        isAuthRequired: 1,
-        isCommonQuestion: 1,
-      })
-      .then((res) => {
-        history.push({
-          pathname: "/question-create-complete",
-          state: { questionId: res.data.data.questionId },
-        });
+  const handleClick = async () => {
+    try {
+      const res = await questionAPI.create({
+        memberId: userInfo?.id,
+        content: location.state.content,
+        ...settings,
       });
+
+      toast({
+        description: "질문이 생성되었습니다.",
+      });
+      history.push({
+        pathname: "/question-complete",
+        state: { questionId: res.data.data.questionId },
+      });
+    } catch {
+      toast({
+        description: "질문 생성에 실패했습니다.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    // section or form submit
-    <section className="flex flex-col items-center justify-center h-screen">
-      <div className="font-bold text-center mb-2">
-        <p>거의 다 왔어요!</p>
-        <p>디테일을 잡아볼까요?</p>
+    <section className="flex flex-col items-center gap-4 justify-evenly h-screen">
+      <p className="text-center text-white text-2xl">
+        <b>거의 다 왔어요!</b>
+        <br />
+        디테일을 잡아볼까요?
+      </p>
+      <QuestionBundle value={content} />
+      <div className="flex w-full flex-col gap-6">
+        <div className="flex items-center gap-x-2 justify-between">
+          <Label
+            htmlFor="show-answer-counts"
+            className="font-bold text-sm text-white"
+          >
+            구슬(답변) 개수 공개
+          </Label>
+          <Switch
+            id="show-answer-counts"
+            checked={settings.isCountVisible === 1}
+            onCheckedChange={() => handleUpdateSetting("isCountVisible")}
+          />
+        </div>
+        <div className="flex items-center gap-x-2 justify-between">
+          <Label
+            htmlFor="is-auth-required"
+            className="font-bold text-sm text-white"
+          >
+            로그인 유저만 답변 가능
+          </Label>
+          <Switch
+            id="is-auth-required"
+            checked={settings.isAuthRequired === 1}
+            onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
+          />
+        </div>
+        <div className="flex items-center gap-x-2 justify-between">
+          <Label
+            htmlFor="is-public-visible"
+            className="font-bold text-sm text-white"
+          >
+            다른 유저 조회 가능
+          </Label>
+          <Switch
+            id="is-public-visible"
+            checked={settings.isPublicVisible === 1}
+            onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
+          />
+        </div>
       </div>
-      <div className="w-36 mb-2">
-        <img src={BUNDEL_IMAGE_URL} className="w-full h-full" />
-      </div>
-
-      <span className="text-sm text-gray-500 mb-6 border border-gray-500 rounded-md p-2">
-        해당 기능은 추후 개발 예정이에요!
-      </span>
-      <div className="flex items-center mb-6 gap-x-2">
-        <Label htmlFor="is-auth-required" className="font-bold">
-          회원만 답을 넣을 수 있게 할까요?
-        </Label>
-        <Switch id="is-auth-required" checked={true} disabled={true} />
-      </div>
-      <div className="flex items-center mb-6 gap-x-2">
-        <Label htmlFor="is-public-visible" className="font-bold">
-          다른 사람도 내 보따리를 열어볼 수 있게 할까요?
-        </Label>
-        <Switch id="is-public-visible" checked={true} disabled={true} />
-      </div>
-      <div className="flex items-center mb-6 gap-x-2">
-        <Label htmlFor="show-answer-counts" className="font-bold">
-          내 보따리에 담긴 답변 갯수가 보이게 할까요?
-        </Label>
-        <Switch id="show-answer-counts" checked={true} disabled={true} />
-      </div>
-      <Button onClick={handleClick}>질문 생성</Button>
+      <Button className="w-72 h-12" onClick={handleClick} children={"만들기"} />
     </section>
   );
 }

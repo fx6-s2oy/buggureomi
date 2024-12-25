@@ -12,9 +12,9 @@ export const questionAPI = {
   },
 
   getQuestion: async (
-    userId: number
+    sqidsId: string
   ): Promise<AxiosResponse<T.QuestionGetResponse>> => {
-    const res = await apiWithToken.get(`/question/${userId}`);
+    const res = await apiWithToken.get(`/question/${sqidsId}`);
     return res;
   },
 };

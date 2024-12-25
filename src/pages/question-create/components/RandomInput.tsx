@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getRandomIndex } from "@/lib/utils";
 import { MOCK_QUESTION_LIST } from "../mock";
+import { IoReload } from "react-icons/io5";
 
 interface RandomInputProps {
   value: string;
@@ -16,14 +17,24 @@ export default function RandomInput({ value, onChange }: RandomInputProps) {
   };
 
   return (
-    <div className="flex gap-2">
-      <Input
-        value={value}
-        className="w-64"
-        placeholder="문구를 입력해주세요"
-        onChange={({ target: { value } }) => handleChangeInput(value)}
-      />
-      <Button onClick={() => handleChangeInput(randomQuestion)}>랜덤</Button>
+    <div className="flex gap-2 flex-col">
+      <div className="flex gap-2">
+        <Input
+          value={value}
+          className="w-56 h-10"
+          placeholder="문구를 입력해주세요"
+          onChange={({ target: { value } }) => handleChangeInput(value)}
+        />
+        <Button
+          className="h-10 w-12"
+          onClick={() => handleChangeInput(randomQuestion)}
+        >
+          <IoReload />
+        </Button>
+      </div>
+      <span className="text-center text-sm text-[#CFD2E4] font-extralight">
+        만들기 어렵다면 준비된 질문을 활용해보세요!
+      </span>
     </div>
   );
 }
