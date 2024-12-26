@@ -1,4 +1,4 @@
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Redirect } from "react-router-dom";
 import { memberAPI } from "@/api/member";
 
 import { tokenCookie } from "@/lib/authToken";
@@ -13,7 +13,24 @@ export default function OAuth() {
 
   const { setUserInfo } = useUserStore();
 
-  if (code) {
+  // URL 직접 접근 여부 확인
+  const allowedReferers = import.meta.env.VITE_ALLOWED_REFERRERS.split(",");
+  const ssoType = sessionStorage.getItem("sso_type");
+  const referrer = document.referrer;
+
+  const checkProperAccess = () => {
+    if (!ssoType) {
+      return false;
+    } else {
+      if (!referrer) {
+        return true;
+      } else {
+        if (allowedReferers.includes(referrer)) return true;
+      }
+    }
+  };
+
+  if (code && checkProperAccess()) {
     memberAPI.getToken({ code }).then((res) => {
       const data = res.data;
 
@@ -31,6 +48,7 @@ export default function OAuth() {
               if (data.status === "OK") {
                 // Case0: 토큰 발행 O & 유저 정보 호출 O
                 setUserInfo(data.data);
+                sessionStorage.clear();
                 history.push("/main");
               } else {
                 // Case1: 토큰 API O & 유저 정보 API X
@@ -66,6 +84,7 @@ export default function OAuth() {
     });
   }
 
+  if (!checkProperAccess()) return <Redirect to="/member-login" />;
   return (
     <div className="flex flex-col gap-4 mt-8">
       <Skeleton className="w-full h-10 bg-gray-400" />
