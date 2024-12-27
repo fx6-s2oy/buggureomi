@@ -12,6 +12,7 @@ type Props = {
   onClose: () => void;
   data: Answer;
   onDeleteSuccess: () => void;
+  isGuestAccess: boolean;
 };
 
 export default function AnswerDetailDialog({
@@ -19,6 +20,7 @@ export default function AnswerDetailDialog({
   onClose,
   data,
   onDeleteSuccess,
+  isGuestAccess,
 }: Props) {
   const [isDeleteAlertOpen, setIsDeleteDialogOpen] = useState(false);
   const date = data.regDate as string;
@@ -53,12 +55,15 @@ export default function AnswerDetailDialog({
 
           <DialogFooter>
             <Button onClick={handleDialogToggle}>닫기</Button>
-            <Button
-              onClick={handleDialogToggle}
-              className="bg-white text-primary"
-            >
-              <FaTrashAlt style={{ width: "20px", height: "auto" }} /> 삭제하기
-            </Button>
+            {!isGuestAccess && (
+              <Button
+                onClick={handleDialogToggle}
+                className="bg-white text-primary"
+              >
+                <FaTrashAlt style={{ width: "20px", height: "auto" }} />{" "}
+                삭제하기
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

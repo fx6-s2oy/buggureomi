@@ -21,7 +21,7 @@ export const answerAPI = {
   },
   detail: async (
     param: T.GetAnswerDetailParam
-  ): Promise<AxiosResponse<T.GetAnswerListResponse>> => {
+  ): Promise<AxiosResponse<T.GetAnswerDetailResponse>> => {
     const res = await apiWithToken.get(`answer/${param.answerId}`);
 
     return res;
@@ -36,5 +36,14 @@ export const answerAPI = {
   ): Promise<T.SelfReflectionAnswerResponse> => {
     const res = await apiWithToken.get(`/self-reflection/${userId}/list`);
     return res.data;
+  },
+  listForGuest: async (
+    param: T.GetAnswerListForGuestParam
+  ): Promise<AxiosResponse<T.GetAnswerListResponse>> => {
+    const res = await apiWithToken.get(`guest/answer/list/${param.sqidsId}`, {
+      params: param.query,
+    });
+
+    return res;
   },
 };

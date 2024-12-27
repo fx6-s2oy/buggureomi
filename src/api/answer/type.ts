@@ -23,7 +23,6 @@ export type GetAnswerListParam = {
   start: number; // page
   limit: number; // count
 };
-
 export type GetAnswerListResponse = BaseResponse<{
   currentPage: number;
   list: Answer[] | null;
@@ -41,3 +40,11 @@ export type DeleteAnswerParam = {
   answerId: number;
 };
 export type DeleteAnswerResponse = BaseResponse<null>;
+
+export type GetAnswerListForGuestParam = {
+  sqidsId: string;
+  query: {
+    start: number; // page
+    limit: number; // count
+  };
+};

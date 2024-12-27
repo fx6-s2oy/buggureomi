@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 
 import AnswerList from "@/components/answer/AnswerList";
 import AnswerDetailDialog from "@/components/answer/dialog/AnswerDetailDialog";
@@ -11,7 +12,9 @@ import { GetAnswerListParam } from "@/api/answer/type";
 import { useUserStore } from "@/store/userStore";
 
 export default function AnswerResult() {
+  const history = useHistory();
   const { userInfo } = useUserStore();
+  const { state } = useLocation<{ question: string }>();
 
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Answer | null>(null);
@@ -33,7 +36,12 @@ export default function AnswerResult() {
 
     setIsLoading(true);
     try {
-      const { data } = await answerAPI.list(paramRef.current);
+      const { data } = state.question
+        ? await answerAPI.listForGuest({
+            sqidsId: state.question,
+            query: paramRef.current,
+          })
+        : await answerAPI.list(paramRef.current);
 
       if (data.status === "OK" && data.data.list) {
         // totalCount는 최초에만 설정
@@ -63,10 +71,12 @@ export default function AnswerResult() {
 
   // 최초 데이터 호출
   useEffect(() => {
-    if (userInfo?.id) {
+    if (userInfo?.id || state.question) {
       getAnswersData();
+    } else {
+      history.push("member-login");
     }
-  }, [userInfo?.id]);
+  }, [userInfo?.id, state]);
 
   // 무한 스크롤 핸들러
   const handleScroll = useCallback(
@@ -125,6 +135,7 @@ export default function AnswerResult() {
           onClose={handleDialogToggle}
           data={selectedItem}
           onDeleteSuccess={handleDeleteSuccess}
+          isGuestAccess={!!state.question}
         />
       )}
     </>

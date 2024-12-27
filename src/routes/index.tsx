@@ -33,6 +33,14 @@ export default function Routing() {
 
             <Route exact path="/oauth/kakao/pending" render={() => <OAuth />} />
 
+            {/* quest route */}
+            <Route
+              exact
+              path="/answer/list/:question"
+              render={() => <AnswerResult />}
+            />
+
+            {/* user route */}
             <Route
               exact
               path="/main"
