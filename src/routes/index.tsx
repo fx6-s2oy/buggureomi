@@ -18,6 +18,7 @@ import PrivateRoute from "@/routes/PrivateRoute";
 import RootLayout from "@/components/RootLayout";
 import { Answer } from "@/pages/answer/index";
 import { DialogProvider } from "@/contexts/DialogContext";
+import AnswerCreateComplete from "@/pages/answer-create-complete";
 
 export default function Routing() {
   return (
@@ -112,6 +113,15 @@ export default function Routing() {
               render={() => (
                 <PrivateRoute>
                   <AnswerCreate />
+                </PrivateRoute>
+              )}
+            />
+            <Route
+              exact
+              path="/answer-create-complete"
+              render={() => (
+                <PrivateRoute>
+                  <AnswerCreateComplete />
                 </PrivateRoute>
               )}
             />

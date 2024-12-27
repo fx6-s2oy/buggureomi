@@ -54,7 +54,7 @@ export default function AnswerCreate() {
         colorCode: colorCode ?? COLOR_CODE_LIST[0],
       })
       .then(() => {
-        //
+        // todo: answer-create-complete 페이지로 redirect
       })
       .catch(() => {
         toast({

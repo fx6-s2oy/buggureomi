@@ -1,4 +1,4 @@
-import BUNDLE_WITH_ANSWER_IMAGE from "@/assets/image/main/bundle_with_answer.png";
+import BUNDLE_WITH_ANSWER_IMAGE from "@/shared/assets/pouch/pouch_with_answer.png";
 import { ReflectionButton } from "@/pages/main/components/ReflectionButton";
 import { Button } from "@/components/ui/button";
 import ShareButton from "@/components/share/ShareButton";
