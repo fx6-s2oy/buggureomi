@@ -21,7 +21,7 @@ export default function RandomInput({ value, onChange }: RandomInputProps) {
       <div className="flex gap-2">
         <Input
           value={value}
-          className="w-56 h-10"
+          className="w-full"
           placeholder="문구를 입력해주세요"
           onChange={({ target: { value } }) => handleChangeInput(value)}
         />

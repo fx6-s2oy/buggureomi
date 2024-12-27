@@ -61,55 +61,59 @@ export default function QuestionCreateDetail() {
   };
 
   return (
-    <section className="flex flex-col items-center gap-4 justify-evenly h-screen">
-      <p className="text-center text-white text-2xl">
-        <b>거의 다 왔어요!</b>
-        <br />
-        디테일을 잡아볼까요?
-      </p>
-      <QuestionBundle value={content} />
-      <div className="flex w-full flex-col gap-6">
-        <div className="flex items-center gap-x-2 justify-between">
-          <Label
-            htmlFor="show-answer-counts"
-            className="font-bold text-sm text-white"
-          >
-            구슬(답변) 개수 공개
-          </Label>
-          <Switch
-            id="show-answer-counts"
-            checked={settings.isCountVisible === 1}
-            onCheckedChange={() => handleUpdateSetting("isCountVisible")}
-          />
-        </div>
-        <div className="flex items-center gap-x-2 justify-between">
-          <Label
-            htmlFor="is-auth-required"
-            className="font-bold text-sm text-white"
-          >
-            로그인 유저만 답변 가능
-          </Label>
-          <Switch
-            id="is-auth-required"
-            checked={settings.isAuthRequired === 1}
-            onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
-          />
-        </div>
-        <div className="flex items-center gap-x-2 justify-between">
-          <Label
-            htmlFor="is-public-visible"
-            className="font-bold text-sm text-white"
-          >
-            다른 유저 조회 가능
-          </Label>
-          <Switch
-            id="is-public-visible"
-            checked={settings.isPublicVisible === 1}
-            onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
-          />
+    <section className="flex flex-col justify-between h-full">
+      <div className="flex flex-col my-auto">
+        <p className="text-center text-white text-2xl">
+          <b>거의 다 왔어요!</b>
+          <br />
+          디테일을 잡아볼까요?
+        </p>
+        <QuestionBundle value={content} />
+        <div className="flex w-full flex-col gap-5">
+          <div className="flex items-center gap-x-2 justify-between">
+            <Label
+              htmlFor="show-answer-counts"
+              className="font-bold text-sm text-white"
+            >
+              구슬(답변) 개수 공개
+            </Label>
+            <Switch
+              id="show-answer-counts"
+              checked={settings.isCountVisible === 1}
+              onCheckedChange={() => handleUpdateSetting("isCountVisible")}
+            />
+          </div>
+          <div className="flex items-center gap-x-2 justify-between">
+            <Label
+              htmlFor="is-auth-required"
+              className="font-bold text-sm text-white"
+            >
+              로그인 유저만 답변 가능
+            </Label>
+            <Switch
+              id="is-auth-required"
+              checked={settings.isAuthRequired === 1}
+              onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
+            />
+          </div>
+          <div className="flex items-center gap-x-2 justify-between">
+            <Label
+              htmlFor="is-public-visible"
+              className="font-bold text-sm text-white"
+            >
+              다른 유저 조회 가능
+            </Label>
+            <Switch
+              id="is-public-visible"
+              checked={settings.isPublicVisible === 1}
+              onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
+            />
+          </div>
         </div>
       </div>
-      <Button className="w-72 h-12" onClick={handleClick} children={"만들기"} />
+      <div className="py-10">
+        <Button className="w-full" onClick={handleClick} children={"만들기"} />
+      </div>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Textarea, TextareaSize } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 type Props = {
   title: string;
@@ -54,7 +55,7 @@ export default function TextFieldWrapper({
           onChange={handleChange}
           placeholder={placeholder}
           size={size}
-          className="resize-none"
+          className={cn("resize-none", isReadOnly && "font-nanum-dahaengce")}
           readOnly={isReadOnly}
         />
       ) : (
@@ -62,6 +63,7 @@ export default function TextFieldWrapper({
           type="text"
           value={value}
           onChange={handleChange}
+          className={cn(isReadOnly && "font-nanum-dahaengce")}
           placeholder={placeholder}
         />
       )}

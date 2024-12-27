@@ -17,16 +17,17 @@ export default function QuestionComplete() {
   }
 
   return (
-    <section className="flex flex-col items-center gap-4 justify-evenly h-screen">
-      <p className="text-center text-white text-2xl">
-        <b>보따리가 완성되었어요!</b>
-        <br />
-        질문을 공유해볼까요?
-      </p>
+    <section className="flex flex-col items-center gap-4 justify-between h-full">
+      <div className="flex flex-col items-center my-auto">
+        <p className="text-center text-white text-2xl">
+          <b>보따리가 완성되었어요!</b>
+          <br />
+          질문을 공유해볼까요?
+        </p>
 
-      <img src={mascot_back} className="w-36 h-64" alt="bundle" />
-
-      <div className="flex flex-col gap-4 w-full">
+        <img src={mascot_back} className="w-36 h-64" alt="bundle" />
+      </div>
+      <div className="flex flex-col gap-4 w-full py-10">
         <Button
           className="w-full"
           onClick={() => {

@@ -178,9 +178,7 @@ export default function SelfReflection() {
   }, [userInfo, toast]);
 
   return (
-    <div className="w-full h-screen">
-      <h2 className="text-h2 text-white text-center mb-6">나 돌아보기</h2>
-
+    <div className="w-full h-full">
       <FunnelForm
         currentStep={step}
         totalSteps={2}

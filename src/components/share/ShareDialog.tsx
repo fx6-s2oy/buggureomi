@@ -6,7 +6,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import CopyURLButton from "./CopyURLButton";
-import { MessageCircle } from "lucide-react";
+import { BsChatFill } from "react-icons/bs";
 import { useDialog } from "@/contexts/DialogContext";
 import { useEffect, useState } from "react";
 import { ShareInfo } from "@/types/link";
@@ -57,7 +57,7 @@ export function ShareDialog({ userId }: Props) {
                   });
                 }}
               >
-                <MessageCircle fill="#3C1E1E" size={48} />
+                <BsChatFill fill="#3C1E1E" size={48} />
                 카카오톡으로 공유하기
               </Button>
 

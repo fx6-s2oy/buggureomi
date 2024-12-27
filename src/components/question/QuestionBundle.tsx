@@ -6,7 +6,7 @@ interface QuestionBundlesLayoutProps {
 
 export function QuestionBundle({ value }: QuestionBundlesLayoutProps) {
   return (
-    <div className="relative h-[10rem] flex justify-center">
+    <div className="relative h-[10rem] flex justify-center mt-6 mb-2">
       <img src={pouch} className="w-40 h-40" alt="bundle" />
       <textarea
         value={value}

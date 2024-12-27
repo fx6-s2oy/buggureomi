@@ -7,12 +7,14 @@ interface LayoutProps {
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen w-full bg-[radial-gradient(circle,#3e4d96_20%,#161f49_100%)]">
-      <div className="mx-auto max-w-[500px] min-h-screen text-foreground">
-        <div className="px-7">
+    <div className="min-h-screen w-full ">
+      <div className="mx-auto w-full max-w-[500px] min-h-screen text-foreground">
+        <div className="px-5">
           <Header />
-          {children}
-          <Toaster />
+          <div className="px-5 h-[calc(100vh-55px)]">
+            {children}
+            <Toaster />
+          </div>
         </div>
       </div>
     </div>

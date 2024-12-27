@@ -39,38 +39,47 @@ export function FunnelForm<T extends FieldValues>({
 
   return (
     <Form {...form}>
-      <div className="flex flex-col">
-        <div className="flex-grow space-y-6">{children}</div>
-        <div className="flex justify-between gap-2 py-10">
-          {isLastStep && (
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full relative"
-              onClick={onPrev}
-            >
-              <IoIosArrowBack
-                className="absolute left-4"
-                color="#667EF5"
-                size={14}
-              />
-              이전
-            </Button>
-          )}
-          {isLastStep ? (
-            <Button onClick={handleSubmit} className="w-full">
-              {`완료(${currentStep}/${totalSteps})`}
-            </Button>
-          ) : (
-            <Button type="button" onClick={onNext} className="w-full relative">
-              {`다음(${currentStep}/${totalSteps})`}
-              <IoIosArrowForward
-                className="absolute right-4"
-                size={132}
-                color="#FFFFFF"
-              />
-            </Button>
-          )}
+      <div className="flex flex-col h-full">
+        <div className="my-auto">
+          <h2 className="text-h2 text-white text-center mb-6">나 돌아보기</h2>
+          <div className="flex flex-col gap-6">{children}</div>
+        </div>
+        <div className="py-10 mt-auto">
+          <div className="flex justify-between gap-2">
+            {isLastStep && (
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full relative"
+                onClick={onPrev}
+              >
+                <IoIosArrowBack
+                  className="absolute left-4"
+                  color="#667EF5"
+                  size={14}
+                />
+                이전
+              </Button>
+            )}
+            {isLastStep ? (
+              <Button onClick={handleSubmit} className="w-full">
+                {`완료(${currentStep}/${totalSteps})`}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={onNext}
+                className="w-full relative"
+              >
+                {`다음(${currentStep}/${totalSteps})`}
+                <IoIosArrowForward
+                  className="absolute right-4"
+                  size={132}
+                  color="#FFFFFF"
+                />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </Form>

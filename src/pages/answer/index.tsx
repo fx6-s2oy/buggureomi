@@ -66,9 +66,9 @@ export function Answer() {
   // }
 
   return (
-    <>
-      <div className="flex flex-col items-center mt-20 text-white overflow-hidden min-h-[30rem]">
-        <div className="text-center mb-2">
+    <div className="flex flex-col h-full justify-between">
+      <div className="flex flex-col my-auto">
+        <div className="text-center mb-2 text-white">
           <p className="text-lg font-light">OOO에게서</p>
           <p className="text-lg font-light">질문 보따리가 왔어!</p>
         </div>
@@ -91,7 +91,7 @@ export function Answer() {
           </div>
         </div>
       </div>
-      <div className="p-[2.5rem]">
+      <div className="py-10">
         <div className="flex flex-col gap-4 w-full">
           <Button
             className="w-full"
@@ -111,6 +111,7 @@ export function Answer() {
       </div>
       {selectedType === "DESC" && (
         <AnswerDescButtonSheet
+          open={selectedType === "DESC"}
           onClose={() => setSelectedType(null)}
           onStart={() => {
             setSelectedType("START");
@@ -119,6 +120,7 @@ export function Answer() {
       )}
       {selectedType === "START" && isAuthRequired && !userInfo?.id && (
         <AnswerStartButton
+          isOpen={selectedType === "START"}
           onClose={() => setSelectedType(null)}
           onBack={() => {
             setSelectedType("DESC");
@@ -128,6 +130,6 @@ export function Answer() {
           }}
         />
       )}
-    </>
+    </div>
   );
 }

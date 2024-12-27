@@ -21,28 +21,30 @@ export default function QuestionCreate() {
   };
 
   return (
-    <section className="flex flex-col items-center gap-4 grow justify-evenly h-screen">
-      <p className="text-center text-white text-2xl">
-        <b>나에 대한 질문</b>을
-        <br />
-        만들어볼까요?
-      </p>
-      <span className="text-center text-white text-sm font-extralight">
-        만들기 어렵다면 준비된 질문을 활용해보세요!
-      </span>
-      <QuestionBundle value="?" />
-      <p className="text-center text-white text-xl font-nanum-dahaengce">
-        대답을 담을 보따리에
-        <br />
-        어떤 문구를 붙일까요?
-      </p>
-      <div>
-        <span className="text-white text-sm">질문하기</span>
-        <RandomInput value={question} onChange={handleChangeQuestion} />
+    <section className="flex flex-col justify-between h-full">
+      <div className="my-auto text-center">
+        <h2 className="text-h2 text-center text-white mb-2">
+          <b>나에 대한 질문</b>을
+          <br />
+          만들어볼까요?
+        </h2>
+        <span className="text-center text-white text-sm font-extralight">
+          만들기 어렵다면 준비된 질문을 활용해보세요!
+        </span>
+        <QuestionBundle value="?" />
+        <p className="text-center text-white text-xl font-nanum-dahaengce">
+          대답을 담을 보따리에
+          <br />
+          어떤 문구를 붙일까요?
+        </p>
+        <div className="mt-6 text-left">
+          <span className="text-white text-sm">질문하기</span>
+          <RandomInput value={question} onChange={handleChangeQuestion} />
+        </div>
       </div>
-      <div className="px-10 pb-10">
+      <div className="py-10">
         <Button
-          className="w-72 h-12"
+          className="w-full"
           disabled={!question.trim().length}
           onClick={handleClick}
           children={
