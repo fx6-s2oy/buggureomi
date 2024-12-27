@@ -20,13 +20,16 @@ export type AnswerCreateResponse = BaseResponse<{
 export type SelfReflectionAnswerResponse = BaseResponse<SelfReflection>;
 
 export type GetAnswerListParam = {
-  userId: number;
+  start: number; // page
+  limit: number; // count
 };
 
 export type GetAnswerListResponse = BaseResponse<{
+  currentPage: number;
   list: Answer[] | null;
   nickname: string;
   totalCount: number;
+  totalPage: number;
 }>;
 
 export type GetAnswerDetailParam = {

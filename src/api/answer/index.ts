@@ -10,8 +10,12 @@ export const answerAPI = {
 
     return res;
   },
-  list: async (): Promise<AxiosResponse<T.GetAnswerListResponse>> => {
-    const res = await apiWithToken.get(`answer/list`);
+  list: async (
+    param: T.GetAnswerListParam
+  ): Promise<AxiosResponse<T.GetAnswerListResponse>> => {
+    const res = await apiWithToken.get("answer/list", {
+      params: param,
+    });
 
     return res;
   },

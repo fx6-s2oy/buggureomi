@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
-import WithoutAnswer from "./components/WithoutAnswer";
-import WithAnswer from "./components/WithAnswer";
-import NonLoggedSection from "./components/NonLoggedSection";
-import { useUserStore } from "@/store/userStore";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+
 import { mainPageApi } from "@/api/main";
 import { MainPageInfo } from "@/types/main-page";
+
+import { useUserStore } from "@/store/userStore";
+import { useSnowStore } from "@/store/snowStore";
+
+import { Button } from "@/components/ui/button";
 import { ShareDialog } from "@/components/share/ShareDialog";
 import { DialogProvider } from "@/contexts/DialogContext";
-import { Button } from "@/components/ui/button";
+import WithoutAnswer from "./components/WithoutAnswer";
+import WithAnswer from "./components/WithAnswer";
 
 export default function Main() {
   const [mainPageInfo, setMainPageInfo] = useState<MainPageInfo>();
 
   const { userInfo } = useUserStore();
+  const { setColorCodeList } = useSnowStore();
 
   const history = useHistory();
 
@@ -25,6 +29,7 @@ export default function Main() {
           history.replace("/question-create");
           return;
         }
+        setColorCodeList(data.colorCodeList);
         setMainPageInfo(data);
       });
     }
@@ -35,7 +40,7 @@ export default function Main() {
   return (
     <>
       {!hasUserId ? (
-        <NonLoggedSection />
+        <Redirect to="/member-login" />
       ) : !mainPageInfo ? (
         <div className="text-white h-screen flex flex-col justify-center items-center">
           <p className="mb-4 text-h5">질문을 아직 만들지 않았어요!</p>
