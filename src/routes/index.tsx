@@ -1,24 +1,28 @@
 import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 
+import RootLayout from "@/components/RootLayout";
+import PrivateRoute from "@/routes/PrivateRoute";
+
 import Main from "@/pages/main";
 
 import MemberJoin from "@/pages/member-join";
 import MemberLogin from "@/pages/login-sso";
 import OAuth from "@/pages/oauth";
+import JoinTerms from "@/pages/join-terms";
 
 import QuestionCreate from "@/pages/question-create";
 import QuestionCreateDetail from "@/pages/question-create-detail";
 import QuestionCreateComplete from "@/pages/question-create-complete";
-
-import AnswerCreate from "@/pages/answer-create";
-import AnswerResult from "@/pages/answer-result";
-import SelfReflection from "@/pages/self-reflection";
 import QuestionComplete from "@/pages/question-complete";
-import PrivateRoute from "@/routes/PrivateRoute";
-import RootLayout from "@/components/RootLayout";
+
 import { Answer } from "@/pages/answer/index";
-import { DialogProvider } from "@/contexts/DialogContext";
+import AnswerCreate from "@/pages/answer-create";
 import AnswerCreateComplete from "@/pages/answer-create-complete";
+import AnswerResult from "@/pages/answer-result";
+
+import SelfReflection from "@/pages/self-reflection";
+
+import { DialogProvider } from "@/contexts/DialogContext";
 
 export default function Routing() {
   return (
@@ -32,6 +36,7 @@ export default function Routing() {
             <Route exact path="/member-login" render={() => <MemberLogin />} />
             <Route exact path="/member-join" render={() => <MemberJoin />} />
 
+            <Route exact path="/join/terms" render={() => <JoinTerms />} />
             <Route exact path="/oauth/kakao/pending" render={() => <OAuth />} />
 
             {/* quest route */}

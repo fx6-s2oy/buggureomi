@@ -34,9 +34,12 @@ export default function AnswerResult() {
   const getAnswersData = async () => {
     if (isLoading || !hasMore) return;
 
+    // COMMENT: strict mode에선 2번 호출로 인한 에러가 뜰 수 있으나, product에선 이슈사항 없음
+    // - 중복 호출로 인해 동일 데이터 map key 중복 에러
+    // - "start: 2" param 건너 뛰는 현상
     setIsLoading(true);
     try {
-      const { data } = state.question
+      const { data } = state?.question
         ? await answerAPI.listForGuest({
             sqidsId: state.question,
             query: paramRef.current,
