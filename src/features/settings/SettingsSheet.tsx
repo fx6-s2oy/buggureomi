@@ -24,7 +24,13 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-export default function SettingsSheet() {
+interface SettingsSheetProps {
+  showOnlyLogout?: boolean;
+}
+
+export default function SettingsSheet({
+  showOnlyLogout = false,
+}: SettingsSheetProps) {
   const { userInfo, setUserInfo } = useUserStore();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
@@ -138,69 +144,77 @@ export default function SettingsSheet() {
             </SheetTitle>
           </div>
         </SheetHeader>
-        <div className="space-y-5">
-          <div className="flex gap-2">
-            <Input
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              disabled={!isEditMode}
-              className={cn(
-                "bg-[#2D3241] border-none disabled:opacity-100",
-                isEditMode ? "text-white" : "text-[#868686]"
-              )}
-            />
-            <button
-              className={cn(
-                "bg-white p-3 rounded-xl",
-                (isEditMode && !nickname.trim()) ||
-                  (isEditMode && nickname === userInfo?.nickname)
-                  ? "cursor-not-allowed"
-                  : "cursor-pointer"
-              )}
-              onClick={handleNicknameButtonClick}
-              disabled={
-                (isEditMode && nickname === userInfo?.nickname) ||
-                (isEditMode && !nickname.trim())
-              }
-            >
-              {isEditMode ? (
-                <FaCheck size={16} color={"#667EF5"} />
-              ) : (
-                <FaPen size={16} color="#323748" />
-              )}
-            </button>
+        {!showOnlyLogout && (
+          <div className="space-y-5">
+            <div className="flex gap-2">
+              <Input
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                disabled={!isEditMode}
+                className={cn(
+                  "bg-[#2D3241] border-none disabled:opacity-100",
+                  isEditMode ? "text-white" : "text-[#868686]"
+                )}
+              />
+              <button
+                className={cn(
+                  "bg-white p-3 rounded-xl",
+                  (isEditMode && !nickname.trim()) ||
+                    (isEditMode && nickname === userInfo?.nickname)
+                    ? "cursor-not-allowed"
+                    : "cursor-pointer"
+                )}
+                onClick={handleNicknameButtonClick}
+                disabled={
+                  (isEditMode && nickname === userInfo?.nickname) ||
+                  (isEditMode && !nickname.trim())
+                }
+              >
+                {isEditMode ? (
+                  <FaCheck size={16} color={"#667EF5"} />
+                ) : (
+                  <FaPen size={16} color="#323748" />
+                )}
+              </button>
+            </div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="marble-count" className="text-body font-semibold">
+                구슬(답변) 개수 공개
+              </Label>
+              <Switch
+                id="marble-count"
+                checked={settings.isPublicVisible === 1}
+                onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label
+                htmlFor="login-required"
+                className="text-body font-semibold"
+              >
+                로그인한 유저만 답변 가능
+              </Label>
+              <Switch
+                id="login-required"
+                checked={settings.isAuthRequired === 1}
+                onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label
+                htmlFor="pouch-visible"
+                className="text-body font-semibold"
+              >
+                다른 유저 조회 가능
+              </Label>
+              <Switch
+                id="pouch-visible"
+                checked={settings.isCountVisible === 1}
+                onCheckedChange={() => handleUpdateSetting("isCountVisible")}
+              />
+            </div>
           </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="marble-count" className="text-body font-semibold">
-              구슬(답변) 개수 공개
-            </Label>
-            <Switch
-              id="marble-count"
-              checked={settings.isAuthRequired === 1}
-              onCheckedChange={() => handleUpdateSetting("isAuthRequired")}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="login-required" className="text-body font-semibold">
-              로그인한 유저만 답변 가능
-            </Label>
-            <Switch
-              id="login-required"
-              checked={settings.isPublicVisible === 1}
-              onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="pouch-visible" className="text-body font-semibold">
-              다른 유저 조회 가능
-            </Label>
-            <Switch
-              id="pouch-visible"
-              checked={settings.isCountVisible === 1}
-              onCheckedChange={() => handleUpdateSetting("isCountVisible")}
-            />
-          </div>
-        </div>
+        )}
         <SheetFooter className="mt-auto !flex-col gap-8">
           <LogoutButton className="mx-auto" />
 

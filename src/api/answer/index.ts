@@ -1,12 +1,12 @@
 import { AxiosResponse } from "axios";
-import { apiWithToken } from "..";
+import { api, apiWithToken } from "..";
 import * as T from "./type";
 
 export const answerAPI = {
   create: async (
     param: T.AnswerCreateParam
   ): Promise<AxiosResponse<T.AnswerCreateResponse>> => {
-    const res = await apiWithToken.post("/answer", param);
+    const res = await api.post("/answer", param);
 
     return res;
   },

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { apiWithToken } from "..";
+import { api, apiWithToken } from "..";
 import * as T from "./type";
 
 export const questionAPI = {
@@ -14,7 +14,7 @@ export const questionAPI = {
   getQuestion: async (
     sqidsId: string
   ): Promise<AxiosResponse<T.QuestionGetResponse>> => {
-    const res = await apiWithToken.get(`/question/${sqidsId}`);
+    const res = await api.get(`/question/${sqidsId}`);
     return res;
   },
 };

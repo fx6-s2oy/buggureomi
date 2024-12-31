@@ -103,32 +103,16 @@ export default function Routing() {
                 </PrivateRoute>
               )}
             />
-            <Route
-              exact
-              path="/answer"
-              render={() => (
-                <PrivateRoute>
-                  <Answer />
-                </PrivateRoute>
-              )}
-            />
+            <Route exact path="/answer" render={() => <Answer />} />
             <Route
               exact
               path="/answer-create"
-              render={() => (
-                <PrivateRoute>
-                  <AnswerCreate />
-                </PrivateRoute>
-              )}
+              render={() => <AnswerCreate />}
             />
             <Route
               exact
               path="/answer-create-complete"
-              render={() => (
-                <PrivateRoute>
-                  <AnswerCreateComplete />
-                </PrivateRoute>
-              )}
+              render={() => <AnswerCreateComplete />}
             />
             <Route
               exact

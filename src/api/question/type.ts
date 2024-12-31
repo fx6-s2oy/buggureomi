@@ -17,7 +17,7 @@ export type QuestionGetResponse = BaseResponse<{
   questionId: number;
   nickname: string;
   content: string;
-  is_public_visible: 0 | 1;
-  is_count_visible: 0 | 1;
-  is_Auth_Required: 0 | 1;
+  isPublicVisible: 0 | 1;
+  isCountVisible: 0 | 1;
+  isAuthRequired: 0 | 1;
 }>;
