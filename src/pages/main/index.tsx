@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
-
 import { mainPageApi } from "@/api/main";
 import { MainPageInfo } from "@/types/main-page";
-
 import { useUserStore } from "@/store/userStore";
 import { useSnowStore } from "@/store/snowStore";
-
 import { Button } from "@/components/ui/button";
 import { ShareDialog } from "@/components/share/ShareDialog";
 import WithoutAnswer from "./components/WithoutAnswer";
 import WithAnswer from "./components/WithAnswer";
 import { DialogProvider } from "@/contexts/DialogContext";
-import { ReflectionButton } from "@/pages/main/components/ReflectionButton";
-import ShareButton from "@/components/share/ShareButton";
 
 export default function Main() {
   const [mainPageInfo, setMainPageInfo] = useState<MainPageInfo>();
@@ -28,20 +23,16 @@ export default function Main() {
       mainPageApi.getInfo().then((res) => {
         const data = res.data.data;
         if (!data) {
-          history.replace("/question-create");
-          return;
+          history.replace("/question-create"); // todo: 질문을 아직 만들지 않았을 때 리다이렉션 잘되는지 확인 필요
+          return null;
         }
         setColorCodeList(data.colorCodeList);
         setMainPageInfo(data);
       });
     }
-  }, [userInfo, history]);
+  }, [userInfo, history, setColorCodeList]);
 
   const hasUserId = userInfo?.id != null;
-
-  const handleClick = () => {
-    history.push("/answer-result");
-  };
 
   return (
     <div className="flex flex-col h-full">
@@ -63,32 +54,17 @@ export default function Main() {
         </div>
       ) : (
         <DialogProvider>
-          <div className="flex flex-col justify-center my-auto">
-            <h2 className="font-bold text-h2 mb-2 text-center text-white">
-              {mainPageInfo.nickname}님의 보따리에
-            </h2>
+          <div className="flex flex-col h-full">
             {mainPageInfo.totalCount < 1 ? (
               <WithoutAnswer
                 userId={userInfo.id}
                 questionContent={mainPageInfo.content}
+                nickname={mainPageInfo.nickname}
               />
             ) : (
               <WithAnswer userId={userInfo.id} mainPageInfo={mainPageInfo} />
             )}
           </div>
-          <footer className="py-10">
-            <Button
-              className="mb-2 w-full"
-              children="열어보기"
-              onClick={handleClick}
-            />
-            <div className="flex w-full">
-              <ReflectionButton userId={userInfo?.id} />
-              <ShareButton variant={"outline"} className="w-full ml-2">
-                공유
-              </ShareButton>
-            </div>
-          </footer>
           <ShareDialog userId={userInfo.id} />
         </DialogProvider>
       )}
