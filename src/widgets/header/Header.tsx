@@ -1,29 +1,55 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
+import { useLoginCheck } from "@/hooks/useLoginCheck";
+
+import BackButton from "@/components/header-button/BackButton";
+import HomeButton from "@/components/header-button/HomeButton";
 import SettingsSheet from "@/features/settings/SettingsSheet";
-import BackHeader from "@/components/back-header/BackHeader";
-import { useUserStore } from "@/store/userStore";
+
+import MASCOT_ICON from "@/assets/image/main/mascot_icon.png";
 
 export default function Header() {
   const location = useLocation();
-  const { userInfo } = useUserStore();
-  const isAuthenticated = !!userInfo?.id;
+  const { isLogin } = useLoginCheck();
 
-  const [isMainPage, setIsMainPage] = useState(false);
+  const [isShowBackButton, setIsShowBackButton] = useState(false);
+  const [isShowHomeButton, setIsShowHomeButton] = useState(false);
+  const [isShowSettingButton, setIsShowSettingButton] = useState(false);
   const [isShowOnlyLogout, setIsShowOnlyLogout] = useState(false);
 
   useEffect(() => {
-    const isMain = location.pathname === "/main" && isAuthenticated;
+    const isLoginPage = location.pathname === "/member-login";
+    const isMainPage = location.pathname === "/main" && isLogin;
+    const isAnswerIntro = location.pathname === "/answer";
+    const isCreatedCompletePage =
+      (location.pathname === "/question-create-complete" && isLogin) ||
+      location.pathname === "/answer-create-complete";
     const isQuestionRoute = location.pathname.startsWith("/question");
 
-    setIsMainPage(isMain || isQuestionRoute);
+    setIsShowBackButton(!isMainPage && !isLoginPage && !isAnswerIntro);
+    setIsShowHomeButton(isCreatedCompletePage || isAnswerIntro);
+
+    setIsShowSettingButton(isMainPage || isQuestionRoute);
     setIsShowOnlyLogout(isQuestionRoute);
-  }, [location, isAuthenticated]);
+  }, [location, isLogin]);
 
   return (
-    <div className="flex items-center justify-between pt-4">
-      <BackHeader />
-      {isMainPage && <SettingsSheet showOnlyLogout={isShowOnlyLogout} />}
-    </div>
+    <header className="flex items-center justify-between pt-4">
+      {isShowBackButton ? (
+        <BackButton />
+      ) : isShowHomeButton ? (
+        <HomeButton />
+      ) : (
+        location.pathname === "/main" && (
+          <div className="w-12">
+            <img src={MASCOT_ICON} alt="mascot" className="w-full" />
+          </div>
+        )
+      )}
+      {isShowSettingButton && (
+        <SettingsSheet showOnlyLogout={isShowOnlyLogout} />
+      )}
+    </header>
   );
 }

@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import MASCOT_ICON from "@/assets/image/main/mascot_icon.png";
 
 interface AnswerDescButtonSheetProps {
   open: boolean;
@@ -54,7 +55,7 @@ export function AnswerDescButtonSheet({
                 </Question>
               </div>
               <div className="flex items-center justify-center">
-                <img src="/images/image1.png" alt="head" />
+                <img src={MASCOT_ICON} alt="mascot" />
                 <p className="text-center text-[#667EF5] text-xl font-nanum-dahaengce">
                   나는
                   <br />
