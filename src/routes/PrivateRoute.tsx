@@ -1,17 +1,16 @@
 import React from "react";
 import { Redirect, RouteProps } from "react-router-dom";
 
-import { useUserStore } from "@/store/userStore";
+import { useLoginCheck } from "@/hooks/useLoginCheck";
 
 interface PrivateRouteProps extends RouteProps {
   children: React.ReactNode;
 }
 
 export default function PrivateRoute({ children }: PrivateRouteProps) {
-  const { userInfo } = useUserStore();
-  const isAuthenticated: boolean = !!userInfo?.id;
+  const { isLogin } = useLoginCheck();
 
-  if (isAuthenticated) {
+  if (isLogin) {
     return children;
   }
 

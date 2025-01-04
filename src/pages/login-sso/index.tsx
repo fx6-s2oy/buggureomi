@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { memberAPI } from "@/api/member";
-import { useUserStore } from "@/store/userStore";
+import { useLoginCheck } from "@/hooks/useLoginCheck";
 
 import { Button } from "@/components/ui/button";
 import mascot_front_standing from "@/shared/assets/mascot/mascot-front-standing.svg";
 import { BsChatFill } from "react-icons/bs";
+
 export default function MemberLogin() {
-  const { userInfo } = useUserStore();
+  const { isLogin } = useLoginCheck();
 
   const history = useHistory();
 
@@ -19,8 +20,8 @@ export default function MemberLogin() {
   };
 
   useEffect(() => {
-    sessionStorage.clear();
-    if (userInfo) {
+    sessionStorage.removeItem("sso_type");
+    if (isLogin) {
       history.push("/main");
     }
   });

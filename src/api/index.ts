@@ -17,10 +17,6 @@ const HEADERS: Record<string, string | boolean> = {
   withCredentials: true,
 };
 
-const createAxios = (): AxiosInstance => {
-  return axios.create({ baseURL: BASE_URL + VERSION, headers: HEADERS });
-};
-
 const renewToken = async (
   param: T.RefreshTokenParam
 ): Promise<AxiosResponse<T.RefreshTokenResponse>> => {
@@ -28,58 +24,82 @@ const renewToken = async (
 
   return res;
 };
+let refreshTokenPromise: Promise<void> | null = null;
 const refreshAccessToken = async () => {
-  const refreshToken = tokenCookie.getCookie("refreshToken");
-
-  if (!refreshToken) {
-    localStorage.removeItem("user-storage");
-
-    throw new Error("There is no refresh token");
+  if (refreshTokenPromise) {
+    return refreshTokenPromise;
   }
 
-  await renewToken({ refreshToken }).then((res) => {
-    const data = res.data;
+  refreshTokenPromise = (async () => {
+    try {
+      const refreshToken = tokenCookie.getCookie("refreshToken");
 
-    if (data.status === "OK") {
-      tokenCookie.setCookie("accessToken", data.data.accessToken, 0.25);
-      tokenCookie.setCookie("refreshToken", data.data.refreshToken, 1);
-    } else {
-      throw new Error(data.status);
+      if (!refreshToken) {
+        localStorage.removeItem("user-storage");
+        throw new Error("There is no refresh token");
+      }
+
+      const res = await renewToken({ refreshToken });
+      const data = res.data;
+
+      if (data.status === "OK") {
+        tokenCookie.setCookie("accessToken", data.data.accessToken, 0.25);
+        tokenCookie.setCookie("refreshToken", data.data.refreshToken, 1);
+      } else if (data.status === "NOT_FOUND") {
+        // 해당하는 유저 정보가 없습니다.
+        throw new Error(data.message);
+      } else {
+        // 통신 에러
+        throw new Error(data.message);
+      }
+    } finally {
+      refreshTokenPromise = null;
     }
-  });
+  })();
+
+  return refreshTokenPromise;
 };
 
-const interceptors = (): AxiosInstance => {
+const createAxiosInstance = (withToken: boolean = false): AxiosInstance => {
   const instance = axios.create({
     baseURL: BASE_URL + VERSION,
     headers: HEADERS,
   });
-  instance.interceptors.request.use(
-    async (config: InternalAxiosRequestConfig) => {
-      if (!config.headers) {
-        config.headers = new AxiosHeaders();
-      }
 
-      const accessToken = tokenCookie.getCookie("accessToken");
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      } else {
-        await refreshAccessToken();
-        config.headers.Authorization = `Bearer ${tokenCookie.getCookie(
-          "accessToken"
-        )}`;
+  if (withToken) {
+    instance.interceptors.request.use(
+      async (config: InternalAxiosRequestConfig) => {
+        if (!config.headers) {
+          config.headers = new AxiosHeaders();
+        }
+
+        const accessToken = tokenCookie.getCookie("accessToken");
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        } else {
+          try {
+            await refreshAccessToken();
+            config.headers.Authorization = `Bearer ${tokenCookie.getCookie(
+              "accessToken"
+            )}`;
+          } catch {
+            tokenCookie.deleteCookie("refreshToken");
+            localStorage.removeItem("user-storage");
+          }
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
       }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+    );
+  }
+
   return instance;
 };
 
 // No token
-export const api = createAxios();
+export const api = createAxiosInstance();
 
 // With token
-export const apiWithToken = interceptors();
+export const apiWithToken = createAxiosInstance(true);

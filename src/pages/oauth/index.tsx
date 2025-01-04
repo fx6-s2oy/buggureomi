@@ -25,7 +25,7 @@ export default function OAuth() {
       if (!referrer) {
         return true;
       } else {
-        if (allowedReferers.includes(referrer)) return true;
+        return allowedReferers.includes(referrer);
       }
     }
   };
@@ -48,7 +48,6 @@ export default function OAuth() {
               if (data.status === "OK") {
                 // Case0: 토큰 발행 O & 유저 정보 호출 O
                 setUserInfo(data.data);
-                sessionStorage.clear();
                 history.push("/main");
               } else {
                 // Case1: 토큰 API O & 유저 정보 API X
@@ -80,6 +79,8 @@ export default function OAuth() {
             history.push("/member-login");
           }
         }
+      } finally {
+        sessionStorage.clear(); // SSO 타입 초기
       }
     });
   }
