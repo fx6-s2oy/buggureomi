@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { answerAPI } from "@/api/answer";
 
@@ -50,7 +50,7 @@ export default function AnswerCreate() {
           data.data.totalCount === -1 ? "n" : data.data.totalCount
         }`
       );
-    } catch (error) {
+    } catch {
       toast({
         description: "구슬 생성에 실패했습니다.",
         variant: "destructive",
