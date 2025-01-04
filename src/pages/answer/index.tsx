@@ -4,7 +4,7 @@ import { AnswerDescButtonSheet } from "./answer-desc-botton-sheet/AnswerDescBott
 import { AnswerStartButton } from "./answer-start-botton-sheet/AnswerStartBottonSheet";
 import { useUserStore } from "@/store/userStore";
 import { useHistory } from "react-router-dom";
-import mascot_front_standing from "@/shared/assets/mascot/mascot-front-standing.svg";
+import pouch_with_mascot from "@/shared/assets/pouch/pouch_with_mascot.svg";
 import { useQuestionInfo } from "@/hooks/useQuestionInfo";
 import { useQuery } from "@/hooks/useQuery";
 
@@ -45,21 +45,8 @@ export function Answer() {
           <p className="text-lg font-light">질문 보따리가 왔어!</p>
         </div>
         <div className="relative w-full flex justify-center items-center">
-          {/* MEMO: 말풍선 디자인 논의 필요 */}
-          {/* <div className="absolute  md:w-96 lg:w-[30rem] top-36 z-[auto]">
-            <img
-              src="/images/arrow.png"
-              alt="arrow"
-              className="w-full h-auto"
-            />
-          </div> */}
-          {/* MEMO: 마스코트 디자인 논의 필요 */}
           <div className="relative w-96 h-96">
-            <img
-              src={mascot_front_standing}
-              alt="Bear"
-              className="w-full h-full rotate-[35deg]"
-            />
+            <img src={pouch_with_mascot} alt="mascot" />
           </div>
         </div>
       </div>

@@ -37,11 +37,7 @@ export default function MemberLogin() {
 
           <div>
             <div className="w-[30%] mx-auto">
-              <img
-                src={mascot_front_standing}
-                alt="부꾸 캐릭터"
-                className="w-[100%]"
-              />
+              <img src={mascot_front_standing} alt="부꾸 캐릭터" />
             </div>
 
             <div className="text-center my-10 text-white font-nanum-dahaengce text-[23px]">
