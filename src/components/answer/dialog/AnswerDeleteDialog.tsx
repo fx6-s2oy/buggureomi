@@ -7,6 +7,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
 type Props = {
@@ -35,13 +36,15 @@ export default function AnswerDeleteDialog({
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
-        <AlertDialogHeader className="text-[24px] mt-3 mb-5">
-          <h2>
-            깨진 구슬은 <strong>복구할 수 없어요!</strong>
-          </h2>
-          <h2>정말 구슬을 깨트릴까요?</h2>
+        <AlertDialogHeader className="mt-3 mb-5">
+          <AlertDialogTitle className="!text-h2">
+            <div>
+              깨진 구슬은 <strong>복구할 수 없어요!</strong>
+              <p>정말 구슬을 깨트릴까요?</p>
+            </div>
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            <p>신중하게 결정하세요!</p>
+            <span>신중하게 결정하세요!</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
 

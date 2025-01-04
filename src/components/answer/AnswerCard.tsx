@@ -1,4 +1,5 @@
 import { Answer } from "@/types/answer";
+import { Bead } from "@/components/bead/Bead";
 
 interface Props {
   answer: Answer;
@@ -12,10 +13,7 @@ export default function AnswerCard({ answer, onDialogOpen }: Props) {
     <div>
       <div className="flex justify-between  mb-1 text-white">
         <span className="flex gap-2 font-semibold">
-          <div
-            style={{ backgroundColor: answer.colorCode }}
-            className="w-[24px] h-[24px] rounded-full"
-          ></div>
+          <Bead color={answer.colorCode} size={25} />
           {answer.sender}님의 구슬
         </span>
         <span>{date}</span>

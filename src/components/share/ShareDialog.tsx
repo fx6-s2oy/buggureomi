@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import CopyURLButton from "./CopyURLButton";
 import { BsChatFill } from "react-icons/bs";
@@ -31,16 +31,17 @@ export function ShareDialog({ userId }: Props) {
     <>
       {shareInfo && (
         <Dialog open={open} onOpenChange={onClose}>
-          <DialogContent>
-            <DialogDescription>
-              <h2 className="text-h2 font-medium text-gray-900">
+          <DialogContent aria-describedby={undefined}>
+            <DialogTitle className="text-center">
+              <span className="text-h2 font-medium text-gray-900">
                 친구에게
-                <span className="font-bold"> 공유</span>
+                <strong className="font-bold"> 공유</strong>
                 해
                 <br />
                 구슬을 얻어볼까요?
-              </h2>
-            </DialogDescription>
+              </span>
+            </DialogTitle>
+
             <DialogFooter>
               <div className="flex justify-center">
                 <img

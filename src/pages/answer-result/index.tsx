@@ -138,7 +138,7 @@ export default function AnswerResult() {
           onClose={handleDialogToggle}
           data={selectedItem}
           onDeleteSuccess={handleDeleteSuccess}
-          isGuestAccess={!!state.question}
+          isGuestAccess={!!state?.question}
         />
       )}
     </>

@@ -1,18 +1,24 @@
-import { FaTrashAlt } from "react-icons/fa";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-
-import { Button } from "../../ui/button";
 import { useState } from "react";
-import AnswerDeleteDialog from "./AnswerDeleteDialog";
+import { FaTrashAlt } from "react-icons/fa";
 
 import { Answer } from "@/types/answer";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "../../ui/button";
+import { Bead } from "@/components/bead/Bead";
+import AnswerDeleteDialog from "./AnswerDeleteDialog";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   data: Answer;
   onDeleteSuccess: () => void;
-  isGuestAccess: boolean;
+  isGuestAccess?: boolean;
 };
 
 export default function AnswerDetailDialog({
@@ -20,7 +26,7 @@ export default function AnswerDetailDialog({
   onClose,
   data,
   onDeleteSuccess,
-  isGuestAccess,
+  isGuestAccess = false,
 }: Props) {
   const [isDeleteAlertOpen, setIsDeleteDialogOpen] = useState(false);
   const date = data.regDate as string;
@@ -36,15 +42,12 @@ export default function AnswerDetailDialog({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="bg-[#D6D8E1]">
+        <DialogContent className="bg-[#D6D8E1]" aria-describedby={undefined}>
           <div className="flex flex-row items-center justify-between mb-3">
-            <h2 className="flex gap-2 font-semibold">
-              <div
-                style={{ backgroundColor: data.colorCode }}
-                className="w-[24px] h-[24px] rounded-full"
-              ></div>
-              {data.sender}님의 구슬
-            </h2>
+            <DialogTitle className="flex items-center gap-2 font-semibold">
+              <Bead color={data.colorCode} size={25} />
+              <span>{data.sender}님의 구슬</span>
+            </DialogTitle>
 
             <span>{date}</span>
           </div>
@@ -54,7 +57,7 @@ export default function AnswerDetailDialog({
           </p>
 
           <DialogFooter>
-            <Button onClick={handleDialogToggle}>닫기</Button>
+            <Button onClick={onClose}>닫기</Button>
             {!isGuestAccess && (
               <Button
                 onClick={handleDialogToggle}

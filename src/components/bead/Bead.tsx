@@ -1,8 +1,8 @@
 import { CSSProperties } from "react";
 
 interface BeadProps {
-  color: CSSProperties["color"];
-  size: number;
+  color?: CSSProperties["color"];
+  size?: number;
   selected?: boolean;
   onClick?: () => void;
 }
