@@ -183,8 +183,8 @@ export default function SettingsSheet({
               </Label>
               <Switch
                 id="marble-count"
-                checked={settings.isPublicVisible === 1}
-                onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
+                checked={settings.isCountVisible === 1}
+                onCheckedChange={() => handleUpdateSetting("isCountVisible")}
               />
             </div>
             <div className="flex items-center justify-between">
@@ -209,8 +209,8 @@ export default function SettingsSheet({
               </Label>
               <Switch
                 id="pouch-visible"
-                checked={settings.isCountVisible === 1}
-                onCheckedChange={() => handleUpdateSetting("isCountVisible")}
+                checked={settings.isPublicVisible === 1}
+                onCheckedChange={() => handleUpdateSetting("isPublicVisible")}
               />
             </div>
           </div>
