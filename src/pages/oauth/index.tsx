@@ -85,7 +85,7 @@ export default function OAuth() {
     });
   }
 
-  if (!checkProperAccess()) return <Redirect to="/member-login" />;
+  if (!code && !checkProperAccess()) return <Redirect to="/member-login" />;
   return (
     <div className="flex flex-col gap-4 mt-8">
       <Skeleton className="w-full h-10 bg-gray-400" />
