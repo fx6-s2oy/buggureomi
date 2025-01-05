@@ -14,23 +14,23 @@ export default function OAuth() {
   const { setUserInfo } = useUserStore();
 
   // URL 직접 접근 여부 확인
-  const allowedReferers = import.meta.env.VITE_ALLOWED_REFERRERS.split(",");
-  const ssoType = sessionStorage.getItem("sso_type");
-  const referrer = document.referrer;
+  // const allowedReferers = import.meta.env.VITE_ALLOWED_REFERRERS.split(",");
+  // const ssoType = sessionStorage.getItem("sso_type");
+  // const referrer = document.referrer;
 
-  const checkProperAccess = () => {
-    if (!ssoType) {
-      return false;
-    } else {
-      if (!referrer) {
-        return true;
-      } else {
-        return allowedReferers.includes(referrer);
-      }
-    }
-  };
+  // const checkProperAccess = () => {
+  //   if (!ssoType) {
+  //     return false;
+  //   } else {
+  //     if (!referrer) {
+  //       return true;
+  //     } else {
+  //       return allowedReferers.includes(referrer);
+  //     }
+  //   }
+  // };
 
-  if (code && checkProperAccess()) {
+  if (code) {
     memberAPI.getToken({ code }).then((res) => {
       const data = res.data;
 
@@ -85,7 +85,7 @@ export default function OAuth() {
     });
   }
 
-  if (!code && !checkProperAccess()) return <Redirect to="/member-login" />;
+  if (!code) return <Redirect to="/member-login" />;
   return (
     <div className="flex flex-col gap-4 mt-8">
       <Skeleton className="w-full h-10 bg-gray-400" />
