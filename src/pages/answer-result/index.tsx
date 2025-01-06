@@ -72,14 +72,14 @@ export default function AnswerResult() {
     }
   };
 
-  // 최초 데이터 호출
+  // 최초 데이터 호출 & 삭제 후 데이터 호출
   useEffect(() => {
     if (userInfo?.id || state.question) {
-      getAnswersData();
+      if (!answersData.length) getAnswersData();
     } else {
       history.push("member-login");
     }
-  }, [userInfo?.id, state]);
+  }, [userInfo?.id, state, answersData.length]);
 
   // 무한 스크롤 핸들러
   const handleScroll = useCallback(
@@ -107,11 +107,11 @@ export default function AnswerResult() {
   };
 
   const handleDeleteSuccess = () => {
-    handleDialogToggle();
     setAnswersData([]);
-    paramRef.current = { start: 1, limit: 10 };
+    setTotalCount(0);
     setHasMore(true);
-    if (userInfo?.id) getAnswersData();
+    paramRef.current = { start: 1, limit: 10 };
+    handleDialogToggle();
   };
 
   return (

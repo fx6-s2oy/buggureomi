@@ -35,12 +35,10 @@ const refreshAccessToken = async () => {
       const refreshToken = tokenCookie.getCookie("refreshToken");
 
       if (!refreshToken) {
-        localStorage.removeItem("user-storage");
         throw new Error("There is no refresh token");
       }
 
-      const res = await renewToken({ refreshToken });
-      const data = res.data;
+      const { data } = await renewToken({ refreshToken });
 
       if (data.status === "OK") {
         tokenCookie.setCookie("accessToken", data.data.accessToken, 0.25);
@@ -85,6 +83,8 @@ const createAxiosInstance = (withToken: boolean = false): AxiosInstance => {
           } catch {
             tokenCookie.deleteCookie("refreshToken");
             localStorage.removeItem("user-storage");
+            localStorage.removeItem("snow-storage");
+            window.location.href = "/member-login";
           }
         }
         return config;
