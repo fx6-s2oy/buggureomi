@@ -12,7 +12,6 @@ import { ConfirmDialog } from "@/pages/self-reflection/components/ConfirmDialog"
 import { selfReflectionSchema } from "@/pages/self-reflection/schemas/reflectionSchema";
 import { useToast } from "@/hooks/use-toast";
 import { selfReflection } from "@/api/self-reflection";
-import { useHistory } from "react-router-dom";
 import {
   ReflectionAnswer,
   ReflectionQuestion,
@@ -25,22 +24,22 @@ import { FunnelForm } from "@/components/FunnelForm/FunnelForm";
 const FORM_FIELDS = [
   {
     name: "regret",
-    label: "올해 가장 후회되는 일은?",
+    label: "작년 가장 후회되는 일은?",
     placeholder: "후회되는 일을 적어주세요",
     type: "textarea",
     size: "s",
   },
   {
     name: "bestThing",
-    label: "올해 가장 잘한 일은?",
+    label: "작년 가장 잘한 일은?",
     placeholder: "잘한 일을 적어주세요",
     type: "textarea",
     size: "s",
   },
   {
     name: "nextYearGoal",
-    label: "내년에는 이것만큼은 꼭 해내야지!",
-    placeholder: "내년의 목표를 적어주세요",
+    label: "올해에는 이것만큼은 꼭 해내야지!",
+    placeholder: "올해의 목표를 적어주세요",
     type: "textarea",
     size: "s",
   },
@@ -76,7 +75,6 @@ export default function SelfReflection() {
   );
   const [step, setStep] = useState(1);
 
-  const history = useHistory();
   const { userInfo } = useUserStore();
 
   const form = useForm<z.infer<typeof selfReflectionSchema>>({
@@ -141,7 +139,9 @@ export default function SelfReflection() {
         title: "제출 완료",
         description: "회고가 성공적으로 저장되었습니다.",
       });
-      history.push("/main");
+      const answersRes = await selfReflection.getSelfReflection();
+      setExistingAnswers(answersRes.data.data);
+      setStep(1);
     } catch (error) {
       toast({
         variant: "destructive",

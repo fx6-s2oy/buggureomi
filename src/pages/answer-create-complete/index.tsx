@@ -74,8 +74,14 @@ export default function AnswerCreateComplete() {
                   의 보따리에
                 </p>
                 <p className="mb-6">
-                  <span className="font-bold">{count}번째</span> 구슬이
-                  담겼어요!
+                  {count === "n" ? (
+                    "마음이 담긴 구슬이 담겼어요!"
+                  ) : (
+                    <span>
+                      <span className="font-bold">{count}번째</span> 구슬이
+                      담겼어요!
+                    </span>
+                  )}
                 </p>
               </motion.p>
               <div className="flex justify-center">

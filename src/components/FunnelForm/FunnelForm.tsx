@@ -63,7 +63,9 @@ export function FunnelForm<T extends FieldValues>({
             )}
             {isLastStep ? (
               <Button onClick={handleSubmit} className="w-full">
-                {`완료(${currentStep}/${totalSteps})`}
+                {`${
+                  isReadOnly ? "닫기" : "완료"
+                }(${currentStep}/${totalSteps})`}
               </Button>
             ) : (
               <Button

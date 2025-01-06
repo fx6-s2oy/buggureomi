@@ -54,6 +54,8 @@ export default function AnswerCreate() {
     }
   };
 
+  const isNextButtonDisabled = !content.trim() || !senderName.trim();
+
   return (
     <section className="flex flex-col h-full gap-6 justify-between">
       <div className="flex flex-col my-auto gap-4">
@@ -101,6 +103,7 @@ export default function AnswerCreate() {
           <TextFieldWrapper
             title="보내는 사람"
             value={senderName}
+            maxLength={10}
             onChange={setSenderName}
             placeholder="이름 입력"
           />
@@ -109,6 +112,7 @@ export default function AnswerCreate() {
       <div className="flex w-full py-10">
         <Button
           className="w-full"
+          disabled={isNextButtonDisabled}
           children={
             <div className="w-full flex flex-row items-center">
               <span className="grow">다음</span>

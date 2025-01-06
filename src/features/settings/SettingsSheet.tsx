@@ -149,12 +149,17 @@ export default function SettingsSheet({
             <div className="flex gap-2">
               <Input
                 value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length <= 10) {
+                    setNickname(e.target.value);
+                  }
+                }}
                 disabled={!isEditMode}
                 className={cn(
                   "bg-[#2D3241] border-none disabled:opacity-100",
                   isEditMode ? "text-white" : "text-[#868686]"
                 )}
+                maxLength={10}
               />
               <button
                 className={cn(

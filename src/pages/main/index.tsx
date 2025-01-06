@@ -35,7 +35,8 @@ export default function Main() {
         setMainPageInfo(data);
       });
     }
-  }, [userInfo?.id, history, isLogin, setColorCodeList]);
+  }, [userInfo, history, isLogin]);
+
 
   return (
     <div className="flex flex-col h-full">
