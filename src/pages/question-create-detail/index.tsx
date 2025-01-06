@@ -66,7 +66,7 @@ export default function QuestionCreateDetail() {
         <p className="text-center text-white text-2xl">
           <b>거의 다 왔어요!</b>
           <br />
-          디테일을 잡아볼까요?
+          마무리 설정을 해볼까요?
         </p>
         <QuestionBundle value={content} />
         <div className="flex w-full flex-col gap-5">
@@ -101,7 +101,7 @@ export default function QuestionCreateDetail() {
               htmlFor="is-public-visible"
               className="font-bold text-sm text-white"
             >
-              다른 유저 조회 가능
+              내 보따리 공개
             </Label>
             <Switch
               id="is-public-visible"

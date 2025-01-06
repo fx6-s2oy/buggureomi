@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { getRandomIndex } from "@/lib/utils";
 import { MOCK_QUESTION_LIST } from "../mock";
 import { IoReload } from "react-icons/io5";
+import TextFieldWrapper from "@/components/common/TextFieldWrapper";
 
 interface RandomInputProps {
   value: string;
@@ -10,24 +10,27 @@ interface RandomInputProps {
 }
 
 export default function RandomInput({ value, onChange }: RandomInputProps) {
-  const randomQuestion = MOCK_QUESTION_LIST[getRandomIndex(MOCK_QUESTION_LIST)];
-
   const handleChangeInput = (value: string) => {
     onChange(value);
   };
 
   return (
     <div className="flex gap-2 flex-col">
-      <div className="flex gap-2">
-        <Input
+      <div className="flex items-end gap-2">
+        <TextFieldWrapper
           value={value}
-          className="w-full"
+          title="질문하기"
           placeholder="문구를 입력해주세요"
-          onChange={({ target: { value } }) => handleChangeInput(value)}
+          onChange={handleChangeInput}
+          maxLength={50}
         />
         <Button
           className="h-10 w-12"
-          onClick={() => handleChangeInput(randomQuestion)}
+          onClick={() => {
+            const randomQuestion =
+              MOCK_QUESTION_LIST[getRandomIndex(MOCK_QUESTION_LIST)];
+            handleChangeInput(randomQuestion);
+          }}
         >
           <IoReload />
         </Button>

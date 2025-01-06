@@ -38,7 +38,6 @@ export default function QuestionCreate() {
           어떤 문구를 붙일까요?
         </p>
         <div className="mt-6 text-left">
-          <span className="text-white text-sm">질문하기</span>
           <RandomInput value={question} onChange={handleChangeQuestion} />
         </div>
       </div>

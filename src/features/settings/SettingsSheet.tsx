@@ -210,7 +210,7 @@ export default function SettingsSheet({
                 htmlFor="pouch-visible"
                 className="text-body font-semibold"
               >
-                다른 유저 조회 가능
+                내 보따리 공개
               </Label>
               <Switch
                 id="pouch-visible"
