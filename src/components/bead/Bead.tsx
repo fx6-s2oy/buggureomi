@@ -34,8 +34,26 @@ export const Bead = ({
               offset="0%"
               style={{ stopColor: "white", stopOpacity: 0.6 }}
             />
-            <stop offset="30%" style={{ stopColor: color, stopOpacity: 0.9 }} />
-            <stop offset="100%" style={{ stopColor: color, stopOpacity: 1 }} />
+            <stop
+              offset="30%"
+              style={{
+                stopColor:
+                  color.startsWith("#") && color.length === 7
+                    ? color
+                    : `#${color}`,
+                stopOpacity: 0.9,
+              }}
+            />
+            <stop
+              offset="100%"
+              style={{
+                stopColor:
+                  color.startsWith("#") && color.length === 7
+                    ? color
+                    : `#${color}`,
+                stopOpacity: 1,
+              }}
+            />
           </radialGradient>
           <radialGradient id={highlightId} cx="35%" cy="35%">
             <stop

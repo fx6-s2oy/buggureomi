@@ -1,14 +1,5 @@
-export const COLOR_CODE_LIST: string[] = [
-  "#FF6F6F",
-  "#FF9F6F",
-  "#FFEA6F",
-  "#A2FF6F",
-  "#6FFF6F",
-  "#6FFFD2",
-  "#6FFFFF",
-  "#6F9FFF",
-  "#6F6FFF",
-  "#9F6FFF",
-  "#FF6FFF",
-  "#FF6FA2",
+export const COLOR_CODE_LIST: string[][] = [
+  ["#EF4C4D", "#FF884D", "#FFC44E", "#89C94D", "#0A8403"],
+  ["#4DC3FF", "#3451E3", "#A071FF", "#832AFE", "#FF4DA5"],
+  ["#FFC088", "#BD6C41", "#FFFFFF", "#8E8E8E", "#000000"],
 ];

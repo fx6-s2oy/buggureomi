@@ -14,12 +14,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@/hooks/useQuery";
 import { useQuestionInfo } from "@/hooks/useQuestionInfo";
 
-const colorGroups = [
-  ["EF4C4D", "FF884D", "FFC44E", "89C94D", "0A8403"],
-  ["4DC3FF", "3451E3", "A071FF", "832AFE", "FF4DA5"],
-  ["FFC088", "BD6C41", "FFFFFF", "8E8E8E", "000000"],
-];
-
 export default function AnswerCreate() {
   const { toast } = useToast();
   const history = useHistory();
@@ -31,7 +25,9 @@ export default function AnswerCreate() {
     redirectTo: "/answer",
   });
 
-  const [colorCode, setColorCode] = useState<string | undefined>(undefined);
+  const [colorCode, setColorCode] = useState<string | undefined>(
+    COLOR_CODE_LIST[0][0]
+  );
   const [content, setContent] = useState<string>("");
   const [senderName, setSenderName] = useState<string>("");
 
@@ -43,7 +39,7 @@ export default function AnswerCreate() {
         questionId: questionInfo.questionId,
         sender: senderName.trim(),
         content: content.trim(),
-        colorCode: colorCode ?? COLOR_CODE_LIST[0],
+        colorCode: colorCode ?? COLOR_CODE_LIST[0][0],
       });
       history.push(
         `/answer-create-complete?question=${sqidsId}&count=${
@@ -72,12 +68,12 @@ export default function AnswerCreate() {
           </div>
         </div>
         <div className="w-full flex flex-col items-center gap-4">
-          {colorGroups.map((group, groupIndex) => (
+          {COLOR_CODE_LIST.map((group, groupIndex) => (
             <div key={groupIndex} className="flex gap-1">
               {group.map((color) => (
                 <Bead
                   key={color}
-                  color={`#${color}`}
+                  color={color}
                   size={36}
                   selected={colorCode === color}
                   onClick={() => setColorCode(color)}
