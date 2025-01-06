@@ -1,4 +1,5 @@
 import Routing from "@/routes";
+import { Analytics } from "@vercel/analytics/react";
 
 import SnowfallBackground from "@/components/common/SnowfallBackground";
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <SnowfallBackground />
       <Routing />
+      <Analytics />
     </>
   );
 }
