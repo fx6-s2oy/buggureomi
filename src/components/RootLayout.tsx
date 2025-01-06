@@ -11,7 +11,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <div className="mx-auto w-full max-w-[500px] min-h-screen text-foreground">
         <div className="px-5">
           <Header />
-          <div className="px-5 h-[calc(100vh-55px)]">
+          <div className="px-5 h-[calc(100vh-70px)]">
             {children}
             <Toaster />
           </div>

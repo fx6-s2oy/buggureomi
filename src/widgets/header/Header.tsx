@@ -13,21 +13,20 @@ export default function Header() {
   const location = useLocation();
   const { isLogin } = useLoginCheck();
 
-  const [isShowBackButton, setIsShowBackButton] = useState(false);
+  const [isShowMainLogo, setIsShowMainLogo] = useState(false);
   const [isShowHomeButton, setIsShowHomeButton] = useState(false);
   const [isShowSettingButton, setIsShowSettingButton] = useState(false);
   const [isShowOnlyLogout, setIsShowOnlyLogout] = useState(false);
 
   useEffect(() => {
-    const isLoginPage = location.pathname === "/member-login";
     const isMainPage = location.pathname === "/main" && isLogin;
     const isAnswerIntro = location.pathname === "/answer";
     const isCreatedCompletePage =
-      (location.pathname === "/question-create-complete" && isLogin) ||
+      (location.pathname === "/question-complete" && isLogin) ||
       location.pathname === "/answer-create-complete";
     const isQuestionRoute = location.pathname.startsWith("/question");
 
-    setIsShowBackButton(!isMainPage && !isLoginPage && !isAnswerIntro);
+    setIsShowMainLogo(isMainPage);
     setIsShowHomeButton(isCreatedCompletePage || isAnswerIntro);
 
     setIsShowSettingButton(isMainPage || isQuestionRoute);
@@ -36,16 +35,14 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between pt-4">
-      {isShowBackButton ? (
-        <BackButton />
+      {isShowMainLogo ? (
+        <div className="w-12">
+          <img src={MASCOT_ICON} alt="mascot" className="w-full" />
+        </div>
       ) : isShowHomeButton ? (
         <HomeButton />
       ) : (
-        location.pathname === "/main" && (
-          <div className="w-12">
-            <img src={MASCOT_ICON} alt="mascot" className="w-full" />
-          </div>
-        )
+        location.pathname !== "/member-login" && <BackButton />
       )}
       {isShowSettingButton && (
         <SettingsSheet showOnlyLogout={isShowOnlyLogout} />
