@@ -52,7 +52,7 @@ export function useQuestionInfo({
       if (questionInfo.isAuthRequired && !userInfo?.id) {
         history.push(`/answer?question=${sqidsId}`);
       }
-    } catch (err) {
+    } catch {
       toast({
         description: "질문 정보를 불러오는데 실패했습니다.",
         variant: "destructive",

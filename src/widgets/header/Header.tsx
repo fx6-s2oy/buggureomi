@@ -24,10 +24,15 @@ export default function Header() {
     const isCreatedCompletePage =
       (location.pathname === "/question-complete" && isLogin) ||
       location.pathname === "/answer-create-complete";
+    const isGuestAccess =
+      location.pathname === "/answer-result" &&
+      location.search.includes("question");
     const isQuestionRoute = location.pathname.startsWith("/question");
 
     setIsShowMainLogo(isMainPage);
-    setIsShowHomeButton(isCreatedCompletePage || isAnswerIntro);
+    setIsShowHomeButton(
+      isCreatedCompletePage || isAnswerIntro || isGuestAccess
+    );
 
     setIsShowSettingButton(isMainPage || isQuestionRoute);
     setIsShowOnlyLogout(isQuestionRoute);

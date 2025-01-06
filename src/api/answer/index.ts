@@ -40,7 +40,7 @@ export const answerAPI = {
   listForGuest: async (
     param: T.GetAnswerListForGuestParam
   ): Promise<AxiosResponse<T.GetAnswerListResponse>> => {
-    const res = await apiWithToken.get(`guest/answer/list/${param.sqidsId}`, {
+    const res = await api.get(`guest/answer/list/${param.sqidsId}`, {
       params: param.query,
     });
 

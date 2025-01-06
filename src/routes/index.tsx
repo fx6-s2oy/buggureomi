@@ -117,11 +117,7 @@ export default function Routing() {
             <Route
               exact
               path="/answer-result"
-              render={() => (
-                <PrivateRoute>
-                  <AnswerResult />
-                </PrivateRoute>
-              )}
+              render={() => <AnswerResult />}
             />
 
             <Redirect to="/" />

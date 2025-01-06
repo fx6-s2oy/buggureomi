@@ -60,13 +60,11 @@ export default function AnswerCreate() {
     <section className="flex flex-col h-full gap-6 justify-between">
       <div className="flex flex-col my-auto gap-4">
         <div className="flex flex-col items-center ">
-          <p className="text-center text-white text-xl">
-            {questionInfo.nickname}님이
-            <br />
-            답변을 기다려요!
+          <p className="text-center text-white text-lg">
+            {questionInfo.nickname}님이 답변을 기다려요!
           </p>
-          <div className="flex items-center justify-center w-full h-10 text-center rounded-md text-xs">
-            <span className="text-[#CFD2E4]">난 올해 어떤 사람이였어?</span>
+          <div className="flex items-center justify-center w-full h-10 text-center rounded-md text-2xl font-bold">
+            <span className="text-[#CFD2E4]">{questionInfo.content}</span>
           </div>
         </div>
         <div className="w-full flex flex-col items-center gap-4">
@@ -115,7 +113,7 @@ export default function AnswerCreate() {
           disabled={isNextButtonDisabled}
           children={
             <div className="w-full flex flex-row items-center">
-              <span className="grow">다음</span>
+              <span className="grow">완료</span>
               <IoChevronForward className="shrink-0" />
             </div>
           }

@@ -42,23 +42,34 @@ export default function AnswerCreateComplete() {
     };
   }, []);
 
-  const handleClick = () => {
-    history.push("/question-create");
+  const handleGoToFriendPouch = () => {
+    history.push(`/answer-result?question=${sqidsId}`);
+  };
+  const handleGoToMakePouch = () => {
+    history.push("/main");
+    /**
+     * 비로그인 유저면 로그인 유도됨
+     * 로그인 유저일 경우
+     * - 보따리가 만들어져 있으면 일반 메인
+     * - 보따리가 안만들어져 있으면 보따리 만들기로 유도
+     */
   };
 
   return (
     <section className="flex flex-col h-full">
       <AnimatePresence>
         {isGifVisible && (
-          <motion.img
-            key="gif"
-            src={WORKING_MASCOT_GIF}
-            alt="GIF"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          />
+          <div className="mt-[50%]">
+            <motion.img
+              key="gif"
+              src={WORKING_MASCOT_GIF}
+              alt="GIF"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
         )}
         {isPngVisible && (
           <>
@@ -84,7 +95,7 @@ export default function AnswerCreateComplete() {
                   )}
                 </p>
               </motion.p>
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center gap-5">
                 <motion.img
                   key="png"
                   src={POUCH_WITH_ANSWER_IMAGE}
@@ -94,6 +105,15 @@ export default function AnswerCreateComplete() {
                   transition={{ duration: 0.5 }}
                   className="w-1/2"
                 />
+
+                {questionInfo?.isPublicVisible && (
+                  <Button
+                    onClick={handleGoToFriendPouch}
+                    className="bg-[#414B79]"
+                  >
+                    친구 보따리 열어보기
+                  </Button>
+                )}
               </div>
             </div>
             <div className="py-10">
@@ -103,7 +123,7 @@ export default function AnswerCreateComplete() {
                 transition={{ duration: 0.5 }}
                 className="mt-6"
               >
-                <Button className="w-full" onClick={handleClick}>
+                <Button onClick={handleGoToMakePouch} className="w-full">
                   나도 보따리 만들러가기
                 </Button>
               </motion.div>
