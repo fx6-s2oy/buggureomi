@@ -4,12 +4,12 @@ import { mainPageApi } from "@/api/main";
 import { MainPageInfo } from "@/types/main-page";
 import { useUserStore } from "@/store/userStore";
 import { useSnowStore } from "@/store/snowStore";
-import { Button } from "@/components/ui/button";
 import { ShareDialog } from "@/components/share/ShareDialog";
 import WithoutAnswer from "./components/WithoutAnswer";
 import WithAnswer from "./components/WithAnswer";
 import { DialogProvider } from "@/contexts/DialogContext";
 import { useLoginCheck } from "@/hooks/useLoginCheck";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Main() {
   const [mainPageInfo, setMainPageInfo] = useState<MainPageInfo>();
@@ -35,23 +35,18 @@ export default function Main() {
         setMainPageInfo(data);
       });
     }
-  }, [userInfo?.id, history, isLogin]);
+  }, [userInfo?.id, history, isLogin, setColorCodeList]);
 
   return (
     <div className="flex flex-col h-full">
       {!mainPageInfo ? (
-        <div className="flex flex-col justify-between flex-grow text-white">
-          <div className="flex flex-col flex-grow justify-center items-center p-5">
-            <p className="mb-4 text-h5">질문을 아직 만들지 않았어요!</p>
+        <div className="flex flex-col h-full gap-4 justify-center">
+          <Skeleton className="w-full h-10 bg-gray-400" />
+          <Skeleton className="w-full h-10 bg-gray-400" />
+          <Skeleton className="w-full h-80 bg-gray-400" />
+          <div className="flex justify-center items-center py-10">
+            <Skeleton className="w-full h-10 bg-gray-400" />
           </div>
-          <footer className="flex justify-center items-center py-10">
-            <Button
-              className="w-full"
-              onClick={() => history.replace("/question-create")}
-            >
-              질문 만들러가기
-            </Button>
-          </footer>
         </div>
       ) : (
         userInfo?.id && (

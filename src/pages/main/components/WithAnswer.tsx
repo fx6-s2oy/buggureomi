@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ReflectionButton } from "./ReflectionButton";
 import ShareButton from "@/components/share/ShareButton";
 import { useHistory } from "react-router-dom";
+import NicknameDisplay from "./NicknameDisplay";
 
 type Props = {
   userId: number;
@@ -29,9 +30,7 @@ export default function WithAnswer({
     <div className="flex flex-col h-full">
       <div className="flex flex-col my-auto">
         <div className="flex flex-col items-center">
-          <h2 className="font-bold text-h2 mb-2 text-center text-white">
-            {nickname}님의 보따리에
-          </h2>
+          <NicknameDisplay nickname={nickname} />
           <span className="text-white text-h2 mb-6">
             {answerCount}개의 답변이 담겨 있어요!
           </span>

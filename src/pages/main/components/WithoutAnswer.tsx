@@ -2,6 +2,7 @@ import BUNDLE_WITHOUT_ANSWER from "@/assets/image/main/bundle_without_answer.png
 import ShareButton from "@/components/share/ShareButton";
 import { ReflectionButton } from "@/pages/main/components/ReflectionButton";
 import Bundle from "./Bundle";
+import NicknameDisplay from "./NicknameDisplay";
 
 type Props = {
   userId: number;
@@ -18,9 +19,7 @@ export default function WithoutAnswer({
     <div className="flex flex-col h-full">
       <div className="flex flex-col my-auto">
         <div className="flex flex-col items-center">
-          <h2 className="font-bold text-h2 mb-2 text-center text-white">
-            {nickname}님의 보따리에
-          </h2>
+          <NicknameDisplay nickname={nickname} />
           <span className="text-h2 text-white mb-6">아직은 답변이 없어요.</span>
           <Bundle
             bundleImageSrc={BUNDLE_WITHOUT_ANSWER}
@@ -34,7 +33,7 @@ export default function WithoutAnswer({
             기다려 볼까요?
           </span>
           <span className="text-white font-nanum-dahaengce mb-2">
-            다시 한번 공유해볼까요?
+            다시 한 번 공유해 볼까요?
           </span>
         </div>
       </div>
