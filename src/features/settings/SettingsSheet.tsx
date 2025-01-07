@@ -75,7 +75,7 @@ export default function SettingsSheet({
     try {
       if (userInfo?.id) await userAPI.updateSettings(userInfo.id, newSettings);
       setSettings(newSettings);
-    } catch (error) {
+    } catch {
       setSettings(settings);
     }
   };
@@ -89,7 +89,7 @@ export default function SettingsSheet({
             response.data.data;
           setSettings({ isPublicVisible, isCountVisible, isAuthRequired });
         }
-      } catch (error) {
+      } catch {
         console.error("설정을 불러오는데 실패했습니다.");
       }
     };
@@ -126,6 +126,12 @@ export default function SettingsSheet({
     if (nickname !== userInfo?.nickname) {
       handleUpdateNickname();
     }
+  };
+
+  const handleGoToCSCenter = () => {
+    window.open(
+      "https://docs.google.com/forms/d/14AvX8JFyLGRBz5u2WwrI68V0J6KhnKH2oBJ09nEF0Ik/viewform?edit_requested=true"
+    );
   };
 
   return (
@@ -220,11 +226,22 @@ export default function SettingsSheet({
             </div>
           </div>
         )}
-        <SheetFooter className="mt-auto !flex-col gap-8">
+        <SheetFooter className="mt-auto !flex-col items-center">
           <LogoutButton className="mx-auto" />
 
-          <Button variant="secondary" className="w-full" onClick={handleClose}>
+          <Button
+            variant="secondary"
+            className="w-full mt-8 mb-3"
+            onClick={handleClose}
+          >
             닫기
+          </Button>
+
+          <Button
+            className="w-16 h-10 text-sm px-0 border-b-2 rounded-none border-white bg-transparent"
+            onClick={handleGoToCSCenter}
+          >
+            문의하기
           </Button>
         </SheetFooter>
       </SheetContent>
