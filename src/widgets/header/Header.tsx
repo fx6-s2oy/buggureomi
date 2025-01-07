@@ -39,7 +39,7 @@ export default function Header() {
   }, [location, isLogin]);
 
   return (
-    <header className="flex items-center justify-between pt-4">
+    <header className="flex items-center h-[70px] justify-between">
       {isShowMainLogo ? (
         <div className="w-12">
           <img src={MASCOT_ICON} alt="mascot" className="w-full" />

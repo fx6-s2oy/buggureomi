@@ -55,7 +55,7 @@ export function Answer() {
           </div>
         </div>
       </div>
-      <div className="py-10">
+      <div className="pb-10">
         <div className="flex flex-col gap-4 w-full">
           <Button
             className="w-full"

@@ -116,7 +116,7 @@ export default function AnswerCreateComplete() {
                 )}
               </div>
             </div>
-            <div className="py-10">
+            <div className="pb-10">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

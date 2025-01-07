@@ -107,7 +107,7 @@ export default function AnswerCreate() {
           />
         </div>
       </div>
-      <div className="flex w-full py-10">
+      <div className="flex w-full pb-10">
         <Button
           className="w-full"
           disabled={isNextButtonDisabled}
