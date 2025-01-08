@@ -38,4 +38,11 @@ export const memberAPI = {
 
     return res;
   },
+  termsAgree: async (
+    param: T.TermsAgreeParam
+  ): Promise<AxiosResponse<T.TermsAgreeResponse>> => {
+    const res = await apiWithToken.put("/member/terms-agreement", param);
+
+    return res;
+  },
 };

@@ -1,4 +1,6 @@
-import { answerAPI } from "@/api/answer";
+import { useHistory } from "react-router-dom";
+import { useLoginCheck } from "@/hooks/useLoginCheck";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,24 +15,15 @@ import {
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  targetId: number;
-  onSuccess: () => void;
 };
 
-export default function AnswerDeleteDialog({
-  isOpen,
-  onClose,
-  targetId,
-  onSuccess,
-}: Props) {
-  const handleDeleteAnswer = async (answerId: number) => {
-    await answerAPI.delete({ answerId }).then((res) => {
-      const data = res.data;
+export default function RejectDialog({ isOpen, onClose }: Props) {
+  const history = useHistory();
+  const { userLogClear } = useLoginCheck();
 
-      if (data.status === "OK") {
-        onSuccess();
-      }
-    });
+  const handleTermsReject = async () => {
+    userLogClear();
+    history.push("/member-login");
   };
 
   return (
@@ -38,19 +31,16 @@ export default function AnswerDeleteDialog({
       <AlertDialogContent>
         <AlertDialogHeader className="mt-3 mb-5">
           <AlertDialogTitle className="!text-h2">
-            <p>
-              깨진 구슬은 <strong>복구할 수 없어요!</strong>
-            </p>
-            <p>정말 구슬을 깨트릴까요?</p>
+            <p>약관 동의를 거부하시겠습니까?</p>
           </AlertDialogTitle>
           <AlertDialogDescription>
-            <span>신중하게 결정하세요!</span>
+            <span>거부하실 경우 서비스 이용에 제약이 있습니까?</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogAction onClick={() => handleDeleteAnswer(targetId)}>
-            삭제
+          <AlertDialogAction onClick={handleTermsReject}>
+            거부
           </AlertDialogAction>
           <AlertDialogCancel>취소</AlertDialogCancel>
         </AlertDialogFooter>

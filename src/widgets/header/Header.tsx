@@ -47,7 +47,8 @@ export default function Header() {
       ) : isShowHomeButton ? (
         <HomeButton />
       ) : (
-        location.pathname !== "/member-login" && <BackButton />
+        location.pathname !== "/member-login" &&
+        location.pathname !== "/join/terms" && <BackButton />
       )}
       {isShowSettingButton && (
         <SettingsSheet showOnlyLogout={isShowOnlyLogout} />

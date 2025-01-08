@@ -1,23 +1,17 @@
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
-import { useUserStore } from "@/store/userStore";
-import { useSnowStore } from "@/store/snowStore";
-import { tokenCookie } from "@/lib/authToken";
+import { useLoginCheck } from "@/hooks/useLoginCheck";
 
 type Props = {
   className?: string;
 };
 
 export default function LogoutButton({ className }: Props) {
-  const { clearUserInfo } = useUserStore();
-  const { clearColorCodeList } = useSnowStore();
+  const { userLogClear } = useLoginCheck();
 
   const logout = () => {
-    clearUserInfo();
-    clearColorCodeList();
-    tokenCookie.deleteCookie("accessToken");
-    tokenCookie.deleteCookie("refreshToken");
+    userLogClear();
   };
 
   return (

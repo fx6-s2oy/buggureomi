@@ -48,9 +48,15 @@ export default function OAuth() {
               if (data.status === "OK") {
                 // Case0: 토큰 발행 O & 유저 정보 호출 O
                 setUserInfo(data.data);
-                const redirectPath =
-                  localStorage.getItem("redirectPath") || "/main";
-                history.push(redirectPath);
+                // 약관 동의 여부 확인
+                if (data.data.isTermsAgreed) {
+                  const redirectPath =
+                    localStorage.getItem("redirectPath") || "/main";
+                  history.push(redirectPath);
+                  localStorage.removeItem("redirectPath");
+                } else {
+                  history.push("/join/terms");
+                }
               } else {
                 // Case1: 토큰 API O & 유저 정보 API X
                 throw new Error("Fail to get user information");

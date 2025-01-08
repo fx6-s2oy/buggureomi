@@ -17,14 +17,18 @@ export function useLoginCheck() {
     );
   }, [userInfo?.id]);
 
+  const userLogClear = () => {
+    clearUserInfo();
+    clearColorCodeList();
+    tokenCookie.deleteCookie("accessToken");
+    tokenCookie.deleteCookie("refreshToken");
+  };
+
   useEffect(() => {
     if (!isLogin) {
-      clearUserInfo();
-      clearColorCodeList();
-      tokenCookie.deleteCookie("accessToken");
-      tokenCookie.deleteCookie("refreshToken");
+      userLogClear();
     }
   }, [isLogin]);
 
-  return { isLogin };
+  return { isLogin, userLogClear };
 }

@@ -22,6 +22,7 @@ export type MemberSearchResponse = BaseResponse<{
   isPublicVisible: 0 | 1;
   isCountVisible: 0 | 1;
   isAuthRequired: 0 | 1;
+  isTermsAgreed: 0 | 1;
 }>;
 
 export type GetTokenParam = { code: string };
@@ -35,3 +36,8 @@ export type RefreshTokenResponse = BaseResponse<{
   accessToken: string;
   refreshToken: string;
 }>;
+
+export type TermsAgreeParam = {
+  isTermsAgreed: 0 | 1;
+};
+export type TermsAgreeResponse = BaseResponse<null>;
