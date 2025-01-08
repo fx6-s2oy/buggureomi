@@ -52,7 +52,7 @@ export default function AnswerDetailDialog({
             <span>{date}</span>
           </div>
 
-          <p className="bg-[#F3F3F3] shadow-custom-inner rounded-xl py-2 px-4 min-h-[200px] mb-10 font-nanum-dahaengce text-xl">
+          <p className="bg-[#F3F3F3] shadow-custom-inner rounded-xl py-2 px-4 min-h-[200px] mb-10 font-nanum-dahaengce text-xl whitespace-pre-wrap">
             {data.content}
           </p>
 
