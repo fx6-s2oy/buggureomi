@@ -32,12 +32,12 @@ export default function WithoutAnswer({
           <span className="font-nanum-dahaengce text-white mb-10">
             기다려 볼까요?
           </span>
-          <span className="text-white font-nanum-dahaengce mb-2">
-            다시 한 번 공유해 볼까요?
-          </span>
         </div>
       </div>
-      <footer className="w-full py-10">
+      <footer className="w-full pb-10">
+        <p className="text-white font-nanum-dahaengce text-center mb-2">
+          다시 한 번 공유해 볼까요?
+        </p>
         <ReflectionButton userId={userId} />
         <ShareButton className="w-full mt-2">공유</ShareButton>
       </footer>

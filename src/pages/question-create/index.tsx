@@ -41,7 +41,7 @@ export default function QuestionCreate() {
           <RandomInput value={question} onChange={handleChangeQuestion} />
         </div>
       </div>
-      <div className="py-10">
+      <div className="pb-10">
         <Button
           className="w-full"
           disabled={!question.trim().length}

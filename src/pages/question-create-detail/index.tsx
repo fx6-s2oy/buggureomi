@@ -22,7 +22,7 @@ export default function QuestionCreateDetail() {
 
   const [settings, setSettings] = useState({
     isCountVisible: 1,
-    isAuthRequired: 1,
+    isAuthRequired: 0,
     isPublicVisible: 1,
   });
 
