@@ -28,15 +28,14 @@ export default function Main() {
       mainPageApi.getInfo().then((res) => {
         const data = res.data.data;
         if (!data) {
-          history.replace("/question-create"); // todo: 질문을 아직 만들지 않았을 때 리다이렉션 잘되는지 확인 필요
+          history.replace("/question-create");
           return;
         }
         setColorCodeList(data.colorCodeList);
         setMainPageInfo(data);
       });
     }
-  }, [userInfo, history, isLogin]);
-
+  }, [userInfo, history, isLogin, setColorCodeList]);
 
   return (
     <div className="flex flex-col h-full">

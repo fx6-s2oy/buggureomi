@@ -20,14 +20,14 @@ export default function WithoutAnswer({
       <div className="flex flex-col my-auto">
         <div className="flex flex-col items-center">
           <NicknameDisplay nickname={nickname} />
-          <span className="text-h2 text-white mb-6">아직은 답변이 없어요.</span>
+          <span className="text-h2 text-white mb-6">아직은 구슬이 없어요.</span>
           <Bundle
             bundleImageSrc={BUNDLE_WITHOUT_ANSWER}
             className="w-40 mb-4"
             questionContent={questionContent}
           />
           <span className="font-nanum-dahaengce text-white">
-            조금만 더 답변을
+            조금만 더 구슬을
           </span>
           <span className="font-nanum-dahaengce text-white mb-10">
             기다려 볼까요?

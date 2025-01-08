@@ -4,7 +4,7 @@ import { MainPageInfo } from "@/types/main-page";
 import { Button } from "@/components/ui/button";
 import { ReflectionButton } from "./ReflectionButton";
 import ShareButton from "@/components/share/ShareButton";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import NicknameDisplay from "./NicknameDisplay";
 
 type Props = {
@@ -32,7 +32,7 @@ export default function WithAnswer({
         <div className="flex flex-col items-center">
           <NicknameDisplay nickname={nickname} />
           <span className="text-white text-h2 mb-6">
-            {answerCount}개의 답변이 담겨 있어요!
+            {answerCount}개의 구슬이 담겨 있어요!
           </span>
           <Bundle
             bundleImageSrc={BUNDLE_WITH_ANSWER_IMAGE}
@@ -40,17 +40,20 @@ export default function WithAnswer({
             questionContent={questionContent}
           />
           <h3 className="font-bold mb-2 w-full text-left text-white">
-            담긴 쪽지 미리보기
+            담긴 구슬 미리보기
           </h3>
-          <p className="bg-[#F3F3F3] w-full px-4 py-3 rounded-md mb-4 h-24 overflow-y-auto font-nanum-dahaengce">
+          <Link
+            to={"/answer-result"}
+            className="block bg-[#F3F3F3] w-full px-4 py-3 rounded-md mb-4 h-24 overflow-y-auto font-nanum-dahaengce"
+          >
             {previewMessage}
-          </p>
+          </Link>
         </div>
       </div>
 
       <footer className="w-full pb-10">
         <p className="font-nanum-dahaengce mb-2 text-center text-white text-xl">
-          누구의 쪽지일까요? 지금 열어보세요!
+          누구의 구슬일까요? 지금 열어보세요!
         </p>
         <Button
           className="mb-2 w-full"
