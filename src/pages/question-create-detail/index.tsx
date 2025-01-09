@@ -8,12 +8,14 @@ import { questionAPI } from "@/api/question";
 import { useUserStore } from "@/store/userStore";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { LuLoaderCircle } from "react-icons/lu";
 
 interface QuestionContent {
   content: string; // question의 타입에 따라 변경
 }
 
 export default function QuestionCreateDetail() {
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const location = useLocation<QuestionContent>();
   const content = (location.state as QuestionContent)?.content;
@@ -38,7 +40,10 @@ export default function QuestionCreateDetail() {
   }
 
   const handleClick = async () => {
+    if (isLoading) return;
+
     try {
+      setIsLoading(true);
       const res = await questionAPI.create({
         memberId: userInfo?.id,
         content: location.state.content,
@@ -57,6 +62,8 @@ export default function QuestionCreateDetail() {
         description: "질문 생성에 실패했습니다.",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,7 +119,14 @@ export default function QuestionCreateDetail() {
         </div>
       </div>
       <div className="py-10">
-        <Button className="w-full" onClick={handleClick} children={"만들기"} />
+        <Button
+          className="w-full"
+          onClick={handleClick}
+          children={
+            isLoading ? <LuLoaderCircle className="animate-spin" /> : "만들기"
+          }
+          disabled={isLoading}
+        />
       </div>
     </section>
   );

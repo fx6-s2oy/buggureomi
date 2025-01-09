@@ -22,11 +22,10 @@ export function ConfirmDialog({
       <DialogContent>
         <DialogDescription>
           <h2 className="text-h2 font-medium text-gray-900">
-            저장한 후엔
+            신중하게 돌아보셨나요?
+            <br />
             <span className="text-primary font-bold"> 수정이 불가능</span>
             해요.
-            <br />
-            신중하게 한 해를 돌아보셨나요?
           </h2>
         </DialogDescription>
         <DialogFooter>
