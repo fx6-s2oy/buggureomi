@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnswerDescButtonSheet } from "./answer-desc-botton-sheet/AnswerDescBottonSheet";
 import { AnswerStartButton } from "./answer-start-botton-sheet/AnswerStartBottonSheet";
 import { useUserStore } from "@/store/userStore";
@@ -38,9 +38,14 @@ export function Answer() {
   };
 
   const handleLogin = () => {
-    localStorage.setItem("redirectPath", `/answer-create?question=${sqidsId}`);
+    localStorage.setItem("redirectPath", `/answer?question=${sqidsId}`);
     history.push("/member-login");
   };
+
+  // 로그인 후 접근했을 때 삭제
+  useEffect(() => {
+    if (userInfo?.id) localStorage.removeItem("redirectPath");
+  }, [userInfo?.id]);
 
   return (
     <div className="flex flex-col h-full justify-between">

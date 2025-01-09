@@ -44,17 +44,17 @@ export default function WithAnswer({
           </h3>
           <Link
             to={"/answer-result"}
-            className="block bg-[#F3F3F3] w-full px-4 py-3 rounded-md mb-4 h-24 overflow-y-auto font-nanum-dahaengce"
+            className="block bg-[#F3F3F3] w-full px-4 py-3 rounded-md mb-4 h-24 overflow-y-auto font-nanum-dahaengce whitespace-pre-wrap"
           >
             {previewMessage}
           </Link>
+          <p className="font-nanum-dahaengce mb-2 text-center text-white text-xl">
+            누구의 구슬일까요? 지금 열어보세요!
+          </p>
         </div>
       </div>
 
       <footer className="w-full pb-10">
-        <p className="font-nanum-dahaengce mb-2 text-center text-white text-xl">
-          누구의 구슬일까요? 지금 열어보세요!
-        </p>
         <Button
           className="mb-2 w-full"
           children="열어보기"

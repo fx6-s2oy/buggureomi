@@ -54,7 +54,6 @@ export default function JoinTerms() {
     } finally {
       const redirectPath = localStorage.getItem("redirectPath") || "/main";
       history.push(redirectPath);
-      localStorage.removeItem("redirectPath");
     }
   };
 

@@ -31,6 +31,9 @@ export default function MemberLogin() {
       <div className="flex flex-col h-full justify-between">
         <div className="flex flex-col my-auto">
           <div className="text-center mb-3 text-white">
+            <p className="font-nanum-dahaengce text-3xl mb-12">
+              당신은 어떤 사람인가요?
+            </p>
             <h2 className="text-h2">로그인</h2>
             <h3 className="mt-2 font-extralight">login</h3>
           </div>
@@ -40,9 +43,9 @@ export default function MemberLogin() {
               <img src={mascot_front_standing} alt="부꾸 캐릭터" />
             </div>
 
-            <div className="text-center my-10 text-white font-nanum-dahaengce text-[23px]">
-              <p>올해의 나에 대해</p>
-              <p>되돌아보러 갈까요?</p>
+            <div className="text-center mt-6 mb-10 text-white font-nanum-dahaengce text-[23px]">
+              <p>전해 듣고 싶은 속마음이 있지 않나요?</p>
+              <p>부꾸가 전달해줄게요!</p>
             </div>
           </div>
         </div>

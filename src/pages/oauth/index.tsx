@@ -1,6 +1,6 @@
 import { useLocation, useHistory, Redirect } from "react-router-dom";
-import { memberAPI } from "@/api/member";
 
+import { memberAPI } from "@/api/member";
 import { tokenCookie } from "@/lib/authToken";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -53,7 +53,6 @@ export default function OAuth() {
                   const redirectPath =
                     localStorage.getItem("redirectPath") || "/main";
                   history.push(redirectPath);
-                  localStorage.removeItem("redirectPath");
                 } else {
                   history.push("/join/terms");
                 }
@@ -88,7 +87,7 @@ export default function OAuth() {
           }
         }
       } finally {
-        sessionStorage.clear(); // SSO 타입 초기
+        sessionStorage.removeItem("sso_type"); // SSO 타입 초기
       }
     });
   }

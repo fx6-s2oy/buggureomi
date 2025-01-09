@@ -190,7 +190,7 @@ export default function SettingsSheet({
             </div>
             <div className="flex items-center justify-between">
               <Label htmlFor="marble-count" className="text-body font-semibold">
-                구슬(답변) 개수 공개
+                구슬 개수 공개
               </Label>
               <Switch
                 id="marble-count"
@@ -216,7 +216,7 @@ export default function SettingsSheet({
                 htmlFor="pouch-visible"
                 className="text-body font-semibold"
               >
-                내 보따리 공개
+                받은 구슬 공개
               </Label>
               <Switch
                 id="pouch-visible"

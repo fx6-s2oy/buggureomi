@@ -121,25 +121,21 @@ export default function AnswerResult() {
 
   return (
     <>
-      <div className="text-center pt-20 pb-10 mb-3 text-white">
-
-        
-
+      <div className="text-center pt-8 pb-10 text-white">
         <h2 className="text-h2">
-          {sqidsId ? nickname : userInfo?.nickname}님의 보따리
+          {sqidsId ? nickname : userInfo?.nickname}님의 보따리에
         </h2>
         <h2 className="text-h2">
           {totalCount !== -1 ? (
-            <span>{totalCount}개의 답변이 담겨 있어요!</span>
+            <span>{totalCount}개의 구슬이 담겨 있어요!</span>
           ) : (
             <span>마음이 담긴 구슬이 들어있어요!</span>
           )}
         </h2>
-
       </div>
 
       <div
-        className="h-[calc(100vh-350px)] overflow-auto"
+        className="h-[calc(100vh-300px)] overflow-auto"
         onScroll={handleScroll}
       >
         <AnswerList listData={answersData} onDialogOpen={handleDialogToggle} />

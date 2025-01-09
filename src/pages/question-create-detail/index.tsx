@@ -82,7 +82,7 @@ export default function QuestionCreateDetail() {
               htmlFor="show-answer-counts"
               className="font-bold text-sm text-white"
             >
-              구슬(답변) 개수 공개
+              구슬 개수 공개
             </Label>
             <Switch
               id="show-answer-counts"
@@ -108,7 +108,7 @@ export default function QuestionCreateDetail() {
               htmlFor="is-public-visible"
               className="font-bold text-sm text-white"
             >
-              내 보따리 공개
+              받은 구슬 공개
             </Label>
             <Switch
               id="is-public-visible"
