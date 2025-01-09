@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -112,10 +113,15 @@ export default {
           "0%": { transform: "translateY(0)" },
           "100%": { transform: "translateY(100%)" },
         },
+        "mascot-mask-loading": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "50%": { transform: "rotate(15deg)" },
+        },
       },
       animation: {
         "slide-up": "slide-up 0.3s ease-out",
         "slide-down": "slide-down 0.3s ease-out",
+        "mascot-mask-loading": "mascot-mask-loading 1.5s infinite ease-in-out",
       },
       fontFamily: {
         pretendard: ["Pretendard", "sans-serif"],
@@ -123,5 +129,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
