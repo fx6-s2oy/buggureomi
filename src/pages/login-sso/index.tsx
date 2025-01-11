@@ -5,8 +5,10 @@ import { memberAPI } from "@/api/member";
 import { useLoginCheck } from "@/hooks/useLoginCheck";
 
 import { Button } from "@/components/ui/button";
-import mascot_front_standing from "@/shared/assets/mascot/mascot-front-standing.svg";
+import CSCenterButton from "@/components/common/CSCenterButton";
+
 import { BsChatFill } from "react-icons/bs";
+import mascot_front_standing from "@/shared/assets/mascot/mascot-front-standing.svg";
 
 export default function MemberLogin() {
   const { isLogin } = useLoginCheck();
@@ -28,8 +30,8 @@ export default function MemberLogin() {
 
   return (
     <>
-      <div className="flex flex-col h-full justify-between">
-        <div className="flex flex-col my-auto">
+      <div className="flex flex-col h-full justify-center gap-5">
+        <div className="flex flex-col">
           <div className="text-center mb-3 text-white">
             <p className="font-nanum-dahaengce text-3xl mb-12">
               당신은 어떤 사람인가요?
@@ -49,7 +51,7 @@ export default function MemberLogin() {
             </div>
           </div>
         </div>
-        <div className="py-10">
+        <div className="py-10 flex flex-col items-center gap-8">
           <Button
             onClick={() => handleOauthLogin("kakao")}
             className="bg-[#FEE500] w-full text-[#3C1E1E]"
@@ -57,6 +59,8 @@ export default function MemberLogin() {
             <BsChatFill fill="#3C1E1E" size={48} />
             <p className="text-[18px]">카카오톡으로 로그인</p>
           </Button>
+
+          <CSCenterButton />
         </div>
       </div>
       {/* 

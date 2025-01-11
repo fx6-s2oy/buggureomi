@@ -18,6 +18,7 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import LogoutButton from "@/components/common/LogoutButton";
+import CSCenterButton from "@/components/common/CSCenterButton";
 
 import { useUserStore } from "@/store/userStore";
 import { Input } from "@/components/ui/input";
@@ -128,12 +129,6 @@ export default function SettingsSheet({
     }
   };
 
-  const handleGoToCSCenter = () => {
-    window.open(
-      "https://docs.google.com/forms/d/14AvX8JFyLGRBz5u2WwrI68V0J6KhnKH2oBJ09nEF0Ik/viewform?edit_requested=true"
-    );
-  };
-
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
@@ -237,12 +232,7 @@ export default function SettingsSheet({
             닫기
           </Button>
 
-          <Button
-            className="w-16 h-10 text-sm px-0 border-b-2 rounded-none border-white bg-transparent"
-            onClick={handleGoToCSCenter}
-          >
-            문의하기
-          </Button>
+          <CSCenterButton />
         </SheetFooter>
       </SheetContent>
     </Sheet>
