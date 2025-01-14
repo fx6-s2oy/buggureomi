@@ -4,6 +4,7 @@ import { SelfReflection } from "@/types/self-reflection";
 
 export type AnswerCreateParam = {
   questionId: string | number;
+  memberId: number | null;
   sender: string;
   content: string;
   colorCode: string;

@@ -13,6 +13,7 @@ import TextFieldWrapper from "@/components/common/TextFieldWrapper";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@/hooks/useQuery";
 import { useQuestionInfo } from "@/hooks/useQuestionInfo";
+import { useUserStore } from "@/store/userStore";
 
 export default function AnswerCreate() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +21,8 @@ export default function AnswerCreate() {
   const history = useHistory();
   const query = useQuery();
   const sqidsId = query.get("question") as string;
+
+  const { userInfo } = useUserStore();
 
   const { questionInfo } = useQuestionInfo({
     sqidsId,
@@ -41,6 +44,7 @@ export default function AnswerCreate() {
       setIsLoading(true);
       const { data } = await answerAPI.create({
         questionId: questionInfo.questionId,
+        memberId: userInfo?.id ?? null,
         sender: senderName.trim(),
         content: content.trim(),
         colorCode: colorCode ?? COLOR_CODE_LIST[0][0],
