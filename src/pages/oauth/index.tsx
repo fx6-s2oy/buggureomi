@@ -14,23 +14,23 @@ export default function OAuth() {
   const { setUserInfo } = useUserStore();
 
   // URL 직접 접근 여부 확인
+  const ssoType = sessionStorage.getItem("sso_type");
   // const allowedReferers = import.meta.env.VITE_ALLOWED_REFERRERS.split(",");
-  // const ssoType = sessionStorage.getItem("sso_type");
   // const referrer = document.referrer;
 
-  // const checkProperAccess = () => {
-  //   if (!ssoType) {
-  //     return false;
-  //   } else {
-  //     if (!referrer) {
-  //       return true;
-  //     } else {
-  //       return allowedReferers.includes(referrer);
-  //     }
-  //   }
-  // };
+  const checkProperAccess = () => {
+    if (ssoType) {
+      return true;
+    }
+    // COMMENT: kakao login Domain에서 리턴되는 referrer를 명확히 알 수 없어서 비활성화
+    // if (!referrer) {
+    //   return true;
+    // } else {
+    //   return allowedReferers.includes(referrer);
+    // }
+  };
 
-  if (code) {
+  if (code && checkProperAccess()) {
     memberAPI.getToken({ code }).then((res) => {
       const data = res.data;
 
@@ -92,7 +92,7 @@ export default function OAuth() {
     });
   }
 
-  if (!code) return <Redirect to="/member-login" />;
+  if (!code || !checkProperAccess()) return <Redirect to="/member-login" />;
   return (
     <div className="flex flex-col gap-4 mt-8">
       <Skeleton className="w-full h-10 bg-gray-400" />
